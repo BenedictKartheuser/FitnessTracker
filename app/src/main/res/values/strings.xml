@@ -11,4 +11,6 @@
         deine verbrauchten Kalorien berechnen.Dein Workout wird in die Datenbank übernommen und
         taucht in deiner History auf. Hier werden alle deine Workouts chronologisch angezeigt.
     </string>
+    <string name="weekly_kcal">XXXX kcal</string>
+    <string name="this_week_text">This week:</string>
 </resources>
