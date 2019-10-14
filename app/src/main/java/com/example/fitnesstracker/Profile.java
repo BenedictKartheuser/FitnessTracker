@@ -1,7 +1,13 @@
 package com.example.fitnesstracker;
 
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Profile {
 
+    @PrimaryKey
     private String name;
     private int size;
     private int weigth;
