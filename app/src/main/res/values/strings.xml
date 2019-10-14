@@ -14,4 +14,7 @@
     <string name="weekly_kcal">XXXX kcal</string>
     <string name="this_week_text">This week:</string>
     <string name="dashboard">Dashboard</string>
+    <string name="nav_training">Training</string>
+    <string name="nav_history">History</string>
+    <string name="nav_howto">How to</string>
 </resources>
