@@ -2,4 +2,13 @@
     <string name="app_name">FitnessTracker</string>
     <string name="height">Height in cm</string>
     <string name="weight">Weight in kg</string>
+    <string name="how_to">Willkommen bei FitnessTracker! \n
+        Mit dieser innovativen und neuartigen App zum Tracken deiner Workouts
+        kannst du deine im Sport verbrauchten Kalorien spielend leicht festhalten.
+        Auf der Startseite kannst du deine Größe und dein aktuelles Körpergewicht angeben.
+        Nach einem Workout wählst du auf der Add-Activity-Seite die ausgeübte Sportart aus
+        und gibst die Dauer deines Trainings an. FitnessTracker wird dir anhand dieser Daten
+        deine verbrauchten Kalorien berechnen.Dein Workout wird in die Datenbank übernommen und
+        taucht in deiner History auf. Hier werden alle deine Workouts chronologisch angezeigt.
+    </string>
 </resources>

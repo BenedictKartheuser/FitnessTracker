@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:paddingRight="15pt"
         android:paddingLeft="15pt"
-        android:background="@drawable/customborder">
+        android:background="@drawable/customborder"
         >
 
         <TextView
