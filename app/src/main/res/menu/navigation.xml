@@ -8,14 +8,17 @@
 
     <item
         android:id="@+id/navigation_training"
+        android:icon="@drawable/ic_activity"
         android:title="@string/nav_training"/>
 
     <item
         android:id="@+id/navigation_history"
+        android:icon="@drawable/ic_history"
         android:title="@string/nav_history"/>
 
     <item
         android:id="@+id/navigation_howto"
+        android:icon="@drawable/ic_how_to"
         android:title="@string/nav_howto"/>
 
 </menu>
