@@ -7,13 +7,19 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Profile {
 
+    public static final String DEFAULT_NAME = "User";
+    public static final int DEFAULT_SIZE = 180;
+    public static final int DEFAULT_WEIGTH = 70;
+
     @PrimaryKey
     private String name;
     private int size;
     private int weigth;
 
-    public Profile() {
-
+    public Profile(String name, int size, int weigth) {
+        setName(name);
+        setSize(size);
+        setWeigth(weigth);
     }
 
     public String getName() {
