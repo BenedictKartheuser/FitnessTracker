@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bn = findViewById(R.id.bottom_navigation);
 
         //Set Up Mehthod for loading profiile, history etc.
-        setUp();
+        //setUp();
 
         //Activates the OnFocusChangeListener on the height & weight edit fields to hide the keyboard and save the changes.
         changeOnState();

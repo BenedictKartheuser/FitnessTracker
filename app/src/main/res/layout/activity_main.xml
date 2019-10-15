@@ -8,6 +8,7 @@
     tools:context=".MainActivity"
     android:clickable="true"
     android:focusableInTouchMode="true"
+    android:background="@drawable/gym"
     >
 
     <TextView
