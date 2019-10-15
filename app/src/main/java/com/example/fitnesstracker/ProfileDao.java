@@ -30,7 +30,7 @@ public interface ProfileDao {
     @Query("SELECT size FROM Profile")
     public Profile getSize();
 
-    @Query("SELECT weigth FROM Profile")
+    @Query("SELECT weight FROM Profile")
     public Profile getWeight();
 
     @Delete

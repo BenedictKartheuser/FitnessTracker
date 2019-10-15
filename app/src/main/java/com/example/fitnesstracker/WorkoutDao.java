@@ -21,7 +21,10 @@ public interface WorkoutDao {
     public void insertTimestamp(Timestamp timestamp);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertDuration(String duration);
+    public void insertDuration(int duration);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public void insertCalorieConsumption(int calorieConsumption);
 
     @Query("SELECT * FROM Workout")
     public Workout getWorkout();
@@ -33,7 +36,10 @@ public interface WorkoutDao {
     public Timestamp getTimestamp();
 
     @Query("SELECT duration FROM Workout")
-    public String getDuration();
+    public int getDuration();
+
+    @Query("SELECT calorieConsumption FROM Workout")
+    public int getCalorieConsumption();
 
     @Delete
     public void delete(Workout workout);

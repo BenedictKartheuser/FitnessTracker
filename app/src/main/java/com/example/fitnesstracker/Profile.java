@@ -9,17 +9,17 @@ public class Profile {
 
     public static final String DEFAULT_NAME = "User";
     public static final int DEFAULT_SIZE = 180;
-    public static final int DEFAULT_WEIGTH = 70;
+    public static final int DEFAULT_WEIGHT = 70;
 
     @PrimaryKey
     private String name;
     private int size;
-    private int weigth;
+    private int weight;
 
-    public Profile(String name, int size, int weigth) {
+    public Profile(String name, int size, int weight) {
         setName(name);
         setSize(size);
-        setWeigth(weigth);
+        setWeight(weight);
     }
 
     public String getName() {
@@ -38,12 +38,12 @@ public class Profile {
         this.size = size;
     }
 
-    public int getWeigth() {
-        return weigth;
+    public int getWeight() {
+        return weight;
     }
 
-    public void setWeigth(int weigth) {
-        this.weigth = weigth;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
 }
