@@ -28,6 +28,10 @@ public class Workout {
         return (int)(profile.getWeight() * sport.getFactor() * duration);
     }
 
+    public void setCalorieConsumption(int calorieConsumption) {
+        this.calorieConsumption = calorieConsumption;
+    }
+
     public int getDuration() {
         return duration;
     }

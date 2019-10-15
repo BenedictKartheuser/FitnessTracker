@@ -5,33 +5,33 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
 @Dao
 public interface ProfileDao {
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insert(Profile profile);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertName(String name);
+    @Update
+    public void updateName(String name);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertSize(int size);
+    @Update
+    public void updateSize(int size);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertWeight(int weight);
+    @Update
+    public void updateWeight(int weight);
 
     @Query("SELECT name FROM Profile")
-    public Profile getName();
+    public String getName();
 
     @Query("SELECT size FROM Profile")
-    public Profile getSize();
+    public int getSize();
 
     @Query("SELECT weight FROM Profile")
-    public Profile getWeight();
+    public int getWeight();
 
     @Delete
     public void delete(Profile profile);
