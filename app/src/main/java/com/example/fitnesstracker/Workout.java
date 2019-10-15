@@ -1,5 +1,6 @@
 package com.example.fitnesstracker;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -8,7 +9,7 @@ import java.sql.Timestamp;
 @Entity
 public class Workout {
 
-    @PrimaryKey
+    @PrimaryKey @NonNull
     private Timestamp timestamp;
     private Sport sport;
     private int duration;
@@ -20,10 +21,23 @@ public class Workout {
         this.sport = sport;
         this.duration = duration;
         this.profile = profile;
-        this.calorieConsumption = getCalorieConsumption();
+        this.calorieConsumption = calculateCalorieConsumption();
     }
 
-    private int getCalorieConsumption() {
+    private int calculateCalorieConsumption() {
         return (int)(profile.getWeight() * sport.getFactor() * duration);
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public int getCalorieConsumption() {
+        return calorieConsumption;
+    }
+
+    @Override @NonNull
+    public String toString() {
+        return this.timestamp + "," + this.sport + "," + this.duration + "," + this.profile + "," + this.calorieConsumption;
     }
 }

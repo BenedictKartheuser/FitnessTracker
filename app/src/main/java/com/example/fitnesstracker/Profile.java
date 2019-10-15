@@ -1,6 +1,7 @@
 package com.example.fitnesstracker;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,7 +12,7 @@ public class Profile {
     public static final int DEFAULT_SIZE = 180;
     public static final int DEFAULT_WEIGHT = 70;
 
-    @PrimaryKey
+    @PrimaryKey @NonNull
     private String name;
     private int size;
     private int weight;
@@ -44,6 +45,11 @@ public class Profile {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    @Override @NonNull
+    public String toString() {
+        return this.name + "," + this.getSize() + "," + this.getWeight();
     }
 
 }

@@ -1,12 +1,13 @@
 package com.example.fitnesstracker;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Sport {
 
-    @PrimaryKey
+    @PrimaryKey @NonNull
     private String name;
     private double factor;
 
@@ -29,5 +30,10 @@ public class Sport {
 
     public void setFactor(double factor) {
         this.factor = factor;
+    }
+
+    @Override @NonNull
+    public String toString() {
+        return this.name + "," + this.getFactor();
     }
 }
