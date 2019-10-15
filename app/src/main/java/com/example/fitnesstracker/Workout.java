@@ -10,12 +10,24 @@ public class Workout {
 
     @PrimaryKey
     private Timestamp timestamp;
+    private Sport sport;
+    private String duration;
+
+    public Workout(Timestamp timestamp, Sport sport, String duration) {
+        this.timestamp = timestamp;
+        this.sport = sport;
+        this.duration = duration;
+    }
 
     public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public Sport getSport() {
+        return sport;
+    }
+
+    public String getDuration() {
+        return duration;
     }
 }
