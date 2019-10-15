@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         //Hier müsste profile aus der datenbank geladen werden
         //profile = DAO;
         if (profile == null) {
-            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGTH);
+            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
         }
 
         //History (?) muss aus DB geladen werden
