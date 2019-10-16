@@ -44,7 +44,6 @@
             android:textSize="40sp"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toTopOf="@+id/card_view"
-            app:layout_constraintEnd_toEndOf=""
             app:layout_constraintStart_toEndOf="@id/dashboard"
             app:layout_constraintTop_toTopOf="parent"
             />
@@ -137,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <EditText
@@ -149,6 +148,7 @@
                 android:background="@android:color/transparent"
                 android:text="180"
                 android:textSize="50sp"
+                android:inputType="number"
 
                 />
 
@@ -162,28 +162,13 @@
                 android:background="@android:color/transparent"
                 android:text="70"
                 android:textSize="50sp"
+                android:inputType="number"
 
 
                 />
 
         </LinearLayout>
 
-
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:itemBackground="@android:color/holo_blue_light"
-            app:itemIconTint="@android:color/black"
-            app:itemTextColor="@android:color/black"
-            app:menu="@menu/navigation">
-
-
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

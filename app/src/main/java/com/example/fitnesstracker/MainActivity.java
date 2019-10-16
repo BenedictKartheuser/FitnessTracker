@@ -10,6 +10,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,24 +41,11 @@ public class MainActivity extends AppCompatActivity {
         //Bottomnavigation erstellen
         BottomNavigationView bn = findViewById(R.id.bottom_navigation);
 
-        bn.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.navigation_dashboard:
-
-                            case R.id.navigation_training:
-
-                            case R.id.navigation_history:
-
-                            case R.id.navigation_howto:
-
-                        }
-                        return true;
-                    }
-                }
-        );
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_dashboard, R.id.navigation_training,
+                R.id.navigation_history, R.id.navigation_howto).build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(bn, navController);
         //Set Up Mehthod for loading profiile, history etc.
         //setUp();
 
