@@ -1,9 +1,11 @@
 package com.example.fitnesstracker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -34,6 +36,24 @@ public class MainActivity extends AppCompatActivity {
         //Bottomnavigation erstellen
         BottomNavigationView bn = findViewById(R.id.bottom_navigation);
 
+        bn.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.navigation_dashboard:
+
+                            case R.id.navigation_training:
+
+                            case R.id.navigation_history:
+
+                            case R.id.navigation_howto:
+
+                        }
+                        return true;
+                    }
+                }
+        );
         //Set Up Mehthod for loading profiile, history etc.
         //setUp();
 
@@ -61,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     public void changeOnState(){
         EditText weightText = findViewById(R.id.weight);
         EditText heightText = findViewById(R.id.height);
+        EditText helloText = findViewById(R.id.name_edit);
 
         weightText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -72,6 +93,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         heightText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    hideKeyboard(view);
+                }
+            }
+        });
+
+        helloText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus){
