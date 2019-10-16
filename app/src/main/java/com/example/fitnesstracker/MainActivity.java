@@ -16,10 +16,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //kommt die Logik überhaupt hier rein?
-    //oder braucht man ne Klasse App?
-    private Profile profile;
-
     //DAOs der einzelnen Entities
     private ProfileDao pdao;
     private SportDao sdao;
@@ -56,24 +52,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-        //Set Up Mehthod for loading profiile, history etc.
-        //setUp();
 
         //Activates the OnFocusChangeListener on the height & weight edit fields to hide the keyboard and save the changes.
         changeOnState();
 
     }
 
-    public void setUp() {
-        //Hier müsste profile aus der datenbank geladen werden
-        //profile = DAO;
-        if (profile == null) {
-            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
-        }
-
-        //History (?) muss aus DB geladen werden
-        //history = ?
-    }
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);

@@ -151,6 +151,7 @@
             android:background="@android:color/transparent"
             android:text="180"
             android:textSize="50sp"
+            android:inputType="number"
 
             />
 
@@ -164,7 +165,7 @@
             android:background="@android:color/transparent"
             android:text="70"
             android:textSize="50sp"
-
+            android:inputType="number"
 
             />
 
