@@ -11,7 +11,7 @@ public class Sport {
     private String name;
     private double factor;
 
-    public void setName(String name, double factor) {
+    public Sport(String name, double factor) {
         setName(name);
         setFactor(factor);
     }
