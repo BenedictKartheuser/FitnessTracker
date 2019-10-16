@@ -3,13 +3,15 @@ package com.example.fitnesstracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.example.fitnesstracker.dao.ProfileDao;
+import com.example.fitnesstracker.dao.SportDao;
+import com.example.fitnesstracker.dao.WorkoutDao;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

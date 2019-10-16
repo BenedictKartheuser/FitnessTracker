@@ -1,10 +1,12 @@
-package com.example.fitnesstracker;
+package com.example.fitnesstracker.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.example.fitnesstracker.Sport;
 
 import java.sql.Timestamp;
 

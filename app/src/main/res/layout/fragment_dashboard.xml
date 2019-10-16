@@ -44,7 +44,6 @@
             android:textSize="40sp"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toTopOf="@+id/card_view"
-            app:layout_constraintEnd_toEndOf=""
             app:layout_constraintStart_toEndOf="@id/dashboard"
             app:layout_constraintTop_toTopOf="parent"
             />
