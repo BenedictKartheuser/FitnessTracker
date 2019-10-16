@@ -14,26 +14,14 @@ public interface WorkoutDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insert(Workout workout);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertSport(Sport sport);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertTimestamp(Timestamp timestamp);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertDuration(int duration);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertCalorieConsumption(int calorieConsumption);
-
     @Query("SELECT * FROM Workout")
     public Workout getWorkout();
 
     @Query("SELECT sport FROM Workout")
-    public Sport getSport();
+    public String getSport();
 
     @Query("SELECT timestamp FROM Workout")
-    public Timestamp getTimestamp();
+    public String getTimestamp();
 
     @Query("SELECT duration FROM Workout")
     public int getDuration();

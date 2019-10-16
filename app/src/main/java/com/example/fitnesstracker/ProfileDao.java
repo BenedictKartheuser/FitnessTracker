@@ -15,7 +15,7 @@ public interface ProfileDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insert(Profile profile);
 
-    @Update
+/*    @Update
     public void updateName(String name);
 
     @Update
@@ -23,7 +23,7 @@ public interface ProfileDao {
 
     @Update
     public void updateWeight(int weight);
-
+*/
     @Query("SELECT name FROM Profile")
     public String getName();
 

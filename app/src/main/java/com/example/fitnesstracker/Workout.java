@@ -4,20 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 public class Workout {
 
     @PrimaryKey @NonNull
-    private Timestamp timestamp;
-    private Sport sport;
+    private String timestamp;
+    private String sport;
     private int duration;
-    private Profile profile;
+    private String profile;
     private int calorieConsumption;
 
-    public Workout(Timestamp timestamp, Sport sport, int duration, Profile profile) {
-        this.timestamp = timestamp;
+    public Workout(String sport, int duration, String profile) {
+        this.timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
         this.sport = sport;
         this.duration = duration;
         this.profile = profile;
@@ -25,15 +26,34 @@ public class Workout {
     }
 
     private int calculateCalorieConsumption() {
-        return (int)(profile.getWeight() * sport.getFactor() * duration);
+        int weight = Integer.parseInt(profile.split(",")[2]);
+        int factor = Integer.parseInt(sport.split(",")[1]);
+        return (int)(weight * factor * duration);
     }
 
     public void setCalorieConsumption(int calorieConsumption) {
         this.calorieConsumption = calorieConsumption;
     }
 
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getSport() {
+        return sport;
+    }
+
     public int getDuration() {
         return duration;
+    }
+
+
+    public String getProfile() {
+        return profile;
     }
 
     public int getCalorieConsumption() {

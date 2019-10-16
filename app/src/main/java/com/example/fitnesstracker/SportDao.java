@@ -14,12 +14,6 @@ public interface SportDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insert(Sport sport);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertName(String name);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertFactor(double factor);
-
     @Query("SELECT name FROM Sport")
     public String getName();
 
