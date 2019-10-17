@@ -21,6 +21,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.fitnesstracker.dao.ProfileDao;
 import com.example.fitnesstracker.dao.SportDao;
 import com.example.fitnesstracker.dao.WorkoutDao;
+import com.example.fitnesstracker.fragments.Dashboard;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private SportDao sdao;
     private WorkoutDao wdao;
 
+    private BottomNavigationView bottomNavigationView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         wdao = FitnessDatabase.getDatabase(this).workoutDao();
 
         //Bottomnavigation erstellen
-        BottomNavigationView bn = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_dashboard, R.id.navigation_training,
                 R.id.navigation_history, R.id.navigation_howto).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(bn, navController);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
         //Set Up Mehthod for loading profiile, history etc.
         //setUp();
 

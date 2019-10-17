@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/dashboard"/>
+        android:title="@string/dashboard"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/navigation_training"
         android:icon="@drawable/ic_fitness_center_black_24dp"
-        android:title="@string/nav_training"/>
+        android:title="@string/nav_training"
+        app:showAsAction="ifRoom"/>/>
 
     <item
         android:id="@+id/navigation_history"
         android:icon="@drawable/ic_history_black_24dp"
-        android:title="@string/nav_history"/>
+        android:title="@string/nav_history"
+        app:showAsAction="ifRoom"/>/>
 
     <item
         android:id="@+id/navigation_howto"
         android:icon="@drawable/ic_help_outline_black_24dp"
-        android:title="@string/nav_howto"/>
+        android:title="@string/nav_howto"
+        app:showAsAction="ifRoom"/>/>
 
 </menu>

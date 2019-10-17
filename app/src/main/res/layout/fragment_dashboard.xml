@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.fitnesstracker.ui.Dashboard">
+    tools:context="com.example.fitnesstracker.fragments.Dashboard"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,8 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
-        android:clickable="true"
-        android:focusableInTouchMode="true"
         android:background="@drawable/gym"
         >
 
@@ -70,7 +69,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="@android:color/holo_blue_light"
+            app:cardBackgroundColor="@color/colorPrimary"
+
             app:cardCornerRadius="8dp"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,6 +84,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:text="@string/this_week_text"
+                android:textColor="@color/colorWhite"
                 android:textSize="25sp" />
 
             <TextView
@@ -95,6 +96,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:gravity="end"
+                android:textColor="@color/colorWhite"
                 android:text="@string/weekly_kcal"
                 android:textSize="50sp" />
         </androidx.cardview.widget.CardView>

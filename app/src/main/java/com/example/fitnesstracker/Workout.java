@@ -31,6 +31,13 @@ public class Workout {
         return (int)(weight * factor * duration);
     }
 
+
+    public int calculateCalorieConsumption(Workout workout) {
+        int weight = Integer.parseInt(workout.getProfile().split(",")[2]);
+        int factor = Integer.parseInt(workout.getSport().split(",")[1]);
+        return (int)(weight * factor * workout.getDuration());
+    }
+
     public void setCalorieConsumption(int calorieConsumption) {
         this.calorieConsumption = calorieConsumption;
     }
@@ -64,4 +71,6 @@ public class Workout {
     public String toString() {
         return this.timestamp + "," + this.sport + "," + this.duration + "," + this.profile + "," + this.calorieConsumption;
     }
+
+
 }
