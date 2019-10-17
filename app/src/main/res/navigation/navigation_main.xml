@@ -3,16 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_main"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@layout/fragment_dashboard"
+    app:startDestination="@id/home_navigation"
 
     >
 
     <fragment
         android:id="@+id/home_navigation"
         android:name="com.example.fitnesstracker.ui.Dashboard"
-        android:label="Test"
+        android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard"/>
 
+    <fragment
+        android:id="@+id/fitness_navigation"
+        android:name="com.example.fitnesstracker.ui.Training"
+        android:label="Training"
+        tools:layout="@layout/fragment_dashboard"/>
+
+    <fragment
+        android:id="@+id/history_navigation"
+        android:name="com.example.fitnesstracker.ui.History"
+        android:label="History"
+        tools:layout="@layout/fragment_dashboard"/>
+
+    <fragment
+        android:id="@+id/howto_navigation"
+        android:name="com.example.fitnesstracker.ui.HowTo"
+        android:label="How to"
+        tools:layout="@layout/fragment_dashboard"/>
 
 
 </navigation>

@@ -7,6 +7,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.fitnesstracker.dao.ProfileDao;
+import com.example.fitnesstracker.dao.SportDao;
+import com.example.fitnesstracker.dao.WorkoutDao;
+
 @Database(entities = {Profile.class, Sport.class, Workout.class}, version = 1, exportSchema = false)
 public abstract class FitnessDatabase extends RoomDatabase {
 
