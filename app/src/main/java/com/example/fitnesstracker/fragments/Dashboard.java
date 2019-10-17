@@ -1,7 +1,5 @@
-package com.example.fitnesstracker.ui;
+package com.example.fitnesstracker.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +15,28 @@ import com.example.fitnesstracker.R;
 public class Dashboard extends Fragment {
 
     private Profile profile;
+    private int lastWeek;
+
+
+    public void setUp() {
+        //Hier müsste profile aus der datenbank geladen werden
+        //profile = DAO;
+        if (profile == null) {
+            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
+        }
+        setContents();
+
+        //nicht new History eigentlich, sondern History aus DB laden
+        History history = new History();
+        lastWeek = history.getLastWeekCalories(history.getHistory());
+    }
+
+    private void setContents() {
+        //Hier werden die EditText Felder mit den Infos aus dem Profil befüllt
+        //... = profile.getName();
+        //... = profile.getSize();
+        //... = profile.getWeight();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,20 +48,5 @@ public class Dashboard extends Fragment {
     }
 
 
-    public void setUp() {
-        //Hier müsste profile aus der datenbank geladen werden
-        //profile = DAO;
-        if (profile == null) {
-            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
-        }
-        setContents();
-    }
-
-    private void setContents() {
-        //Hier werden die EditText Felder mit den Infos aus dem Profil befüllt
-        //... = profile.getName();
-        //... = profile.getSize();
-        //... = profile.getWeight();
-    }
 }
 
