@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_main"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/home_navigation"
+
+    >
+
+    <fragment
+        android:id="@+id/home_navigation"
+        android:name="com.example.fitnesstracker.fragments.Dashboard"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_home_navigation_to_fitness_navigation"
+            app:destination="@id/fitness_navigation" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fitness_navigation"
+        android:name="com.example.fitnesstracker.fragments.Training"
+        android:label="Training"
+        tools:layout="@layout/fragment_dashboard"/>
+
+    <fragment
+        android:id="@+id/history_navigation"
+        android:name="com.example.fitnesstracker.fragments.History"
+        android:label="History"
+        tools:layout="@layout/fragment_dashboard"/>
+
+    <fragment
+        android:id="@+id/howto_navigation"
+        android:name="com.example.fitnesstracker.fragments.HowTo"
+        android:label="How to"
+        tools:layout="@layout/fragment_dashboard"/>
+
+
+</navigation>

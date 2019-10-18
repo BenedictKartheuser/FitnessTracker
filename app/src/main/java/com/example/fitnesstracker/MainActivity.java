@@ -3,23 +3,42 @@ package com.example.fitnesstracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.fragment.*;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+
 import com.example.fitnesstracker.dao.ProfileDao;
 import com.example.fitnesstracker.dao.SportDao;
 import com.example.fitnesstracker.dao.WorkoutDao;
+import com.example.fitnesstracker.fragments.Dashboard;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 public class MainActivity extends AppCompatActivity {
+
+    //kommt die Logik überhaupt hier rein?
+    //oder braucht man ne Klasse App?
+    private Profile profile;
 
     //DAOs der einzelnen Entities
     private ProfileDao pdao;
     private SportDao sdao;
     private WorkoutDao wdao;
+
+    private BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,69 +51,38 @@ public class MainActivity extends AppCompatActivity {
         wdao = FitnessDatabase.getDatabase(this).workoutDao();
 
         //Bottomnavigation erstellen
-        BottomNavigationView bn = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
 
-        bn.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.navigation_dashboard:
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_dashboard, R.id.navigation_training,
+                R.id.navigation_history, R.id.navigation_howto).build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        //Set Up Mehthod for loading profiile, history etc.
+        //setUp();
 
-                            case R.id.navigation_training:
 
-                            case R.id.navigation_history:
-
-                            case R.id.navigation_howto:
-
-                        }
-                        return true;
-                    }
-                }
-        );
-
-        //Activates the OnFocusChangeListener on the height & weight edit fields to hide the keyboard and save the changes.
-        changeOnState();
 
     }
-
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void changeOnState(){
-        EditText weightText = findViewById(R.id.weight);
-        EditText heightText = findViewById(R.id.height);
-        EditText helloText = findViewById(R.id.name_edit);
+    public void setUp() {
+        //Hier müsste profile aus der datenbank geladen werden
+        //profile = DAO;
+        if (profile == null) {
+            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
+        }
 
-        weightText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
-                    hideKeyboard(view);
-                }
-            }
-        });
-
-        heightText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
-                    hideKeyboard(view);
-                }
-            }
-        });
-
-        helloText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
-                    hideKeyboard(view);
-                }
-            }
-        });
+        //History (?) muss aus DB geladen werden
+        //history = ?
     }
+
+
+
+
 
 }

@@ -38,6 +38,7 @@ public class History extends Fragment {
      * @param history - Liste aller workouts, wird vorher aus DB geladen
      * @return verbrauchte Kalorien der letzten Woche via getCalories Methode
      */
+    /*
     public int getLastWeekCalories(ArrayList<Workout> history) {
         int[] calories = new int[history.size()];
         Date workoutDate;
@@ -49,7 +50,7 @@ public class History extends Fragment {
             }
         }
         return getCalories(calories);
-    }
+    }*/
 
     /**
      *
