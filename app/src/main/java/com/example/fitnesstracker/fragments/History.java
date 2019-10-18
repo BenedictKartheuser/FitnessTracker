@@ -3,6 +3,8 @@ package com.example.fitnesstracker.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +24,11 @@ public class History extends Fragment {
     final static long DAY_IN_MS = 1000 * 60 * 60 * 24;
 
 
-    private void setUp() {
+    private ArrayList<Workout> setUp() {
         //History aus DB laden
         //history = ;
+        history = new ArrayList<Workout>();
+        return history;
     }
 
     /**
@@ -87,10 +91,17 @@ public class History extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setUp();
+
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(setUp());
+        recyclerView.setAdapter(adapter);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        return view;
 
 
     }
