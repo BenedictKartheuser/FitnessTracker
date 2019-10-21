@@ -20,7 +20,7 @@ import com.example.fitnesstracker.R;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 
-public class Dashboard<sensorManager> extends Fragment {
+public class Dashboard extends Fragment {
 
     private Profile profile;
     private int lastWeek;

@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.*;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,6 +24,9 @@ import com.example.fitnesstracker.dao.ProfileDao;
 import com.example.fitnesstracker.dao.SportDao;
 import com.example.fitnesstracker.dao.WorkoutDao;
 import com.example.fitnesstracker.fragments.Dashboard;
+import com.example.fitnesstracker.fragments.History;
+import com.example.fitnesstracker.fragments.HowTo;
+import com.example.fitnesstracker.fragments.Training;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -37,33 +42,116 @@ public class MainActivity extends AppCompatActivity {
     private SportDao sdao;
     private WorkoutDao wdao;
 
-    private BottomNavigationView bottomNavigationView;
+    private Dashboard dashFrag;
+    private Training trainFrag;
+    private History histFrag;
+    private HowTo howtoFrag;
 
+
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment selectedFrag;
+            switch (item.getItemId()) {
+                case R.id.navigation_dashboard:
+                    //switchToDashboard();
+                    selectedFrag = dashFrag;
+                    setTitle(R.string.dashboard);
+                    break;
+                case R.id.navigation_training:
+                    //switchToTraining();
+                    selectedFrag = trainFrag;
+                    setTitle(R.string.nav_training);
+                    break;
+                case R.id.navigation_history:
+                    //switchToHistory();
+                    selectedFrag = histFrag;
+                    setTitle(R.string.nav_history);
+                    break;
+                case R.id.navigation_howto:
+                    //switchToHowTo();
+                    selectedFrag = howtoFrag;
+                    setTitle(R.string.nav_howto);
+                    break;
+                default: selectedFrag = dashFrag;
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                    selectedFrag).commit();
+            return true;
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+
 
         //DAO einbinden
         pdao = FitnessDatabase.getDatabase(this).profileDao();
         sdao = FitnessDatabase.getDatabase(this).sportDao();
         wdao = FitnessDatabase.getDatabase(this).workoutDao();
 
-        //Bottomnavigation erstellen
-        bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        //Einzelne Fragmente auf die zugegriffen werden soll
+        dashFrag = new Dashboard();
+        trainFrag = new Training();
+        histFrag = new History();
+        howtoFrag = new HowTo();
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.navigation_dashboard, dashFrag)
+                .commit();
+        setTitle(R.string.dashboard);
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+
+
+
+        /*
+        //Bottomnavigation erstellen
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_dashboard, R.id.navigation_training,
-                R.id.navigation_history, R.id.navigation_howto).build();
+        R.id.navigation_history, R.id.navigation_howto).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        //NavigationUI.setupWithNavController(bottomNavigationView, navController);
         //Set Up Mehthod for loading profiile, history etc.
         //setUp();
+
+         */
+
+
+
 
 
 
     }
+
+    /*
+    public void switchToDashboard() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.fragment_dashboard, new Dashboard()).commit();
+    }
+
+    public void switchToTraining() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.fragment_training, new Training()).commit();
+    }
+
+    public void switchToHistory() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.fragment_history, new History()).commit();
+    }
+
+    public void switchToHowTo() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.fragment_how_to, new HowTo()).commit();
+    }
+
+     */
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
