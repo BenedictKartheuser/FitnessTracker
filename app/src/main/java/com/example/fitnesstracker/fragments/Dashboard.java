@@ -108,31 +108,33 @@ public class Dashboard extends Fragment {
     }
 
 
+
     public void changeOnState(View view){
         EditText weightText = view.findViewById(R.id.weight);
         EditText heightText = view.findViewById(R.id.height);
         EditText helloText = view.findViewById(R.id.name_edit);
 
-        weightText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        weight_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus){
                     hideKeyboard(view);
+
+                }
+            }
+        });
+
+        height_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
                     hideKeyboard(view);
                 }
             }
         });
 
-        heightText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
-                    hideKeyboard(view);
-                }
-            }
-        });
-
-        helloText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        name_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus){
