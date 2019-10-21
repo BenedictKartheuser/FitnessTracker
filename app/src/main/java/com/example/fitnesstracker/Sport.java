@@ -11,6 +11,11 @@ public class Sport {
     private String name;
     private double factor;
 
+    public Sport (String sport) {
+        setName(sport.split(",")[0]);
+        setFactor(Double.parseDouble(sport.split(",")[1]));
+    }
+
     public Sport(String name, double factor) {
         setName(name);
         setFactor(factor);
