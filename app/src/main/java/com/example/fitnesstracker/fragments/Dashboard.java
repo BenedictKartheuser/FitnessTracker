@@ -4,6 +4,8 @@ import android.content.Context;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,11 +19,18 @@ import com.example.fitnesstracker.MainActivity;
 import com.example.fitnesstracker.Profile;
 import com.example.fitnesstracker.R;
 
+import java.util.Objects;
+import java.util.logging.Logger;
+
 import static androidx.core.content.ContextCompat.getSystemService;
 
 
 public class Dashboard extends Fragment {
 
+    private View root;
+    private TextView hello_text, exe_text, week_text, kcal_text, height_text, weight_text;
+    private EditText name_edit, height_edit, weight_edit;
+    private CardView dash_card;
     private Profile profile;
     private int lastWeek;
 
@@ -51,12 +60,15 @@ public class Dashboard extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
 
-        setUp(view);
+        addToView(root);
+        changeOnState(root);
+        setUp(root);
 
 
 
@@ -66,10 +78,33 @@ public class Dashboard extends Fragment {
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
+    public void addToView(View root){
+
+        //TextView
+        hello_text = root.findViewById(R.id.hello_text);
+        exe_text = root.findViewById(R.id.ex_mark);
+        week_text = root.findViewById(R.id.week_text);
+        kcal_text = root.findViewById(R.id.kcal_text);
+        height_text = root.findViewById(R.id.height_text);
+        weight_text = root.findViewById(R.id.weight_text);
+
+        //EditText
+        name_edit = root.findViewById(R.id.name_edit);
+        height_edit = root.findViewById(R.id.height);
+        weight_edit = root.findViewById(R.id.weight);
+
+        //CardView
+        dash_card = root.findViewById(R.id.card_view);
+
+
+    }
+
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        InputMethodManager inputMethodManager =(InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 

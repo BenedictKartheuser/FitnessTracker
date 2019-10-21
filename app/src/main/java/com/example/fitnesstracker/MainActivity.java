@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         howtoFrag = new HowTo();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.navigation_dashboard, dashFrag)
+                .replace(R.id.nav_host_fragment, dashFrag)
                 .commit();
         setTitle(R.string.dashboard);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
