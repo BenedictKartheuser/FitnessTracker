@@ -37,11 +37,6 @@ public class MainActivity extends AppCompatActivity {
     //oder braucht man ne Klasse App?
     private Profile profile;
 
-    //DAOs der einzelnen Entities
-    private ProfileDao pdao;
-    private SportDao sdao;
-    private WorkoutDao wdao;
-
     private Dashboard dashFrag;
     private Training trainFrag;
     private History histFrag;
@@ -89,13 +84,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-
-
-        //DAO einbinden
-        pdao = FitnessDatabase.getDatabase(this).profileDao();
-        sdao = FitnessDatabase.getDatabase(this).sportDao();
-        wdao = FitnessDatabase.getDatabase(this).workoutDao();
 
         //Einzelne Fragmente auf die zugegriffen werden soll
         dashFrag = new Dashboard();

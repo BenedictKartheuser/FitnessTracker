@@ -5,11 +5,20 @@
     tools:context="com.example.fitnesstracker.fragments.HowTo"
     android:id="@+id/fragment_how_to">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/howto_textview"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hh" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp">
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/how_to_text"
+        android:text="@string/how_to"
+        android:textSize="20sp"
+        android:padding="16dp"/>
+    </androidx.cardview.widget.CardView>
 
 </FrameLayout>

@@ -1,5 +1,6 @@
 package com.example.fitnesstracker.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.example.fitnesstracker.R;
+import com.example.fitnesstracker.dao.WorkoutDao;
 import com.example.fitnesstracker.Sport;
 import com.example.fitnesstracker.Workout;
 
@@ -23,6 +25,8 @@ public class Training extends Fragment {
     private Sport sport;
     private int duration;
 
+    private WorkoutDao workoutDao;
+
     private AutoCompleteTextView addSport;
     private NumberPicker addDuration;
     private Button addWorkout;
@@ -31,38 +35,54 @@ public class Training extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_training, container, false);
 
-        //setUp(view);
+        setUp(root);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_training, container, false);
     }
 
-    private void setUp(View view) {
+    private void setUp(View root) {
         duration = 0;
 
-        addSport = view.findViewById(R.id.add_sport);
-        addDuration = view.findViewById(R.id.add_duration);
-        addWorkout = view.findViewById(R.id.add_workout);
-        consumedCalories = view.findViewById(R.id.consumed_calories);
+        addSport = root.findViewById(R.id.add_sport);
+        addDuration = root.findViewById(R.id.add_duration);
+        addWorkout = root.findViewById(R.id.add_workout);
+        consumedCalories = root.findViewById(R.id.consumed_calories);
 
         setUpSportPicker();
         setUpDurationPicker();
 
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View root) {
                 //Wo genau Sport herkommt muss noch geklärt werden
                 workout = new Workout(sport.toString(), duration);
                 //insert workout in Datenbank
+                workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
+                new SaveTask().execute(workout);
                 consumedCalories.setText(workout.getCalorieConsumption());
             }
         });
     }
 
+    class SaveTask extends AsyncTask<Workout, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Workout... workouts) {
+            workoutDao.insert(workout);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
     private void setUpSportPicker() {
         String[] sports = getResources().getStringArray(R.array.sports_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sports);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, sports);
         addSport.setAdapter(adapter);
     }
 
@@ -70,6 +90,7 @@ public class Training extends Fragment {
 
         addDuration.setMinValue(1);
         addDuration.setMaxValue(300);
+        addDuration.setWrapSelectorWheel(true);
         addDuration.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {

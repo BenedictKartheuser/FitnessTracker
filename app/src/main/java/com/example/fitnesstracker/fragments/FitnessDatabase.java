@@ -1,4 +1,4 @@
-package com.example.fitnesstracker;
+package com.example.fitnesstracker.fragments;
 
 
 import android.content.Context;
@@ -7,6 +7,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.fitnesstracker.Profile;
+import com.example.fitnesstracker.Sport;
+import com.example.fitnesstracker.Workout;
 import com.example.fitnesstracker.dao.ProfileDao;
 import com.example.fitnesstracker.dao.SportDao;
 import com.example.fitnesstracker.dao.WorkoutDao;
