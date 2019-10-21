@@ -7,8 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ public class Training extends Fragment {
     private int duration;
     private int calorieConsumption;
 
-    EditText addSport;
+    AutoCompleteTextView addSport;
     NumberPicker addDuration;
     Button addWorkout;
     TextView consumedCalories;
@@ -46,6 +47,7 @@ public class Training extends Fragment {
         addWorkout = view.findViewById(R.id.add_workout);
         consumedCalories = view.findViewById(R.id.consumed_calories);
 
+        setUpSportPicker();
         setUpDurationPicker();
 
         addWorkout.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +58,12 @@ public class Training extends Fragment {
                 consumedCalories.setText(workout.getCalorieConsumption());
             }
         });
+    }
+
+    private void setUpSportPicker() {
+        String[] sports = getResources().getStringArray(R.array.sports_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sports);
+        addSport.setAdapter(adapter);
     }
 
     private void setUpDurationPicker() {
