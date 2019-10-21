@@ -17,10 +17,11 @@ public class Workout {
     private String profile;
     private int calorieConsumption;
 
-    public Workout(String sport, int duration, String profile) {
+    public Workout(String sport, int duration) {
         this.timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
         this.sport = sport;
         this.duration = duration;
+        //Profile aus db laden!
         this.profile = profile;
         this.calorieConsumption = calculateCalorieConsumption();
     }
