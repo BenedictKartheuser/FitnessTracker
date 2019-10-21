@@ -28,14 +28,14 @@ public class Workout {
 
     private int calculateCalorieConsumption() {
         int weight = Integer.parseInt(profile.split(",")[2]);
-        int factor = Integer.parseInt(sport.split(",")[1]);
+        double factor = Double.parseDouble(sport.split(",")[1]);
         return (int)(weight * factor * duration);
     }
 
 
     public int calculateCalorieConsumption(Workout workout) {
         int weight = Integer.parseInt(workout.getProfile().split(",")[2]);
-        int factor = Integer.parseInt(workout.getSport().split(",")[1]);
+        double factor = Double.parseDouble(workout.getSport().split(",")[1]);
         return (int)(weight * factor * workout.getDuration());
     }
 

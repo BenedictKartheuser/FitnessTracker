@@ -22,12 +22,11 @@ public class Training extends Fragment {
     private Workout workout;
     private Sport sport;
     private int duration;
-    private int calorieConsumption;
 
-    AutoCompleteTextView addSport;
-    NumberPicker addDuration;
-    Button addWorkout;
-    TextView consumedCalories;
+    private AutoCompleteTextView addSport;
+    private NumberPicker addDuration;
+    private Button addWorkout;
+    private TextView consumedCalories;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +52,8 @@ public class Training extends Fragment {
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Workout workout = new Workout(sport.toString(), duration);
+                //Wo genau Sport herkommt muss noch geklärt werden
+                workout = new Workout(sport.toString(), duration);
                 //insert workout in Datenbank
                 consumedCalories.setText(workout.getCalorieConsumption());
             }
