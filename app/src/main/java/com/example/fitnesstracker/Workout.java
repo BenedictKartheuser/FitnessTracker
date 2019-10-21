@@ -14,6 +14,11 @@ public class Workout {
     private String timestamp;
     private String sport;
     private int duration;
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
     private String profile;
     private int calorieConsumption;
 

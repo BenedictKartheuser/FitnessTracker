@@ -33,7 +33,7 @@ public class Training extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        setUp(view);
+        //setUp(view);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_training, container, false);
     }
