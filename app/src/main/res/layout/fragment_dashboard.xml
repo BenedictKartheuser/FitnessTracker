@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.fitnesstracker.fragments.Dashboard"
     android:id="@+id/fragment_dashboard"
+    android:background="@drawable/gym"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
