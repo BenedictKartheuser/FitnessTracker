@@ -1,5 +1,6 @@
 package com.example.fitnesstracker.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,19 +13,24 @@ import android.view.ViewGroup;
 
 import com.example.fitnesstracker.R;
 import com.example.fitnesstracker.Workout;
+import com.example.fitnesstracker.dao.WorkoutDao;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class History extends Fragment {
 
-    private ArrayList<Workout> history;
+    private List<Workout> history;
     final static long DAY_IN_MS = 1000 * 60 * 60 * 24;
 
+    private RecyclerViewAdapter adapter;
+    private WorkoutDao workoutDao;
 
-    private ArrayList<Workout> setUp() {
+
+    private List<Workout> setUp() {
         //History aus DB laden
         //history = ;
         history = new ArrayList<Workout>();
@@ -93,13 +99,17 @@ public class History extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View view = inflater.inflate(R.layout.fragment_history, container, false);
+
+        workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(setUp());
+        adapter = new RecyclerViewAdapter(setUp());
         recyclerView.setAdapter(adapter);
+        new LadeWorkoutTask().execute();
 
         // Inflate the layout for this fragment
         return view;
@@ -107,11 +117,25 @@ public class History extends Fragment {
 
     }
 
-    public ArrayList<Workout> getHistory() {
+    public List<Workout> getHistory() {
         return history;
     }
 
-    public void setHistory(ArrayList<Workout> history) {
+    public void setHistory(List<Workout> history) {
         this.history = history;
+    }
+
+    class LadeWorkoutTask extends AsyncTask<Void, Void, List<Workout>>{
+
+        @Override
+        protected List<Workout> doInBackground(Void... voids) {
+            return workoutDao.getWorkout();
+        }
+
+        @Override
+        protected  void onPostExecute(List<Workout> history){
+            super.onPostExecute(history);
+            adapter.setHistory(history);
+        }
     }
 }

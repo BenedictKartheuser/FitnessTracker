@@ -14,6 +14,7 @@ import com.example.fitnesstracker.R;
 import com.example.fitnesstracker.Workout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -24,9 +25,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    private ArrayList<Workout> history;
+    private List<Workout> history;
 
-    public RecyclerViewAdapter (ArrayList<Workout> history) {
+    public RecyclerViewAdapter (List<Workout> history) {
         this.history = history;
     }
 
@@ -60,5 +61,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public void setHistory(List<Workout> history){
+        this.history = history;
+        notifyDataSetChanged();
     }
 }

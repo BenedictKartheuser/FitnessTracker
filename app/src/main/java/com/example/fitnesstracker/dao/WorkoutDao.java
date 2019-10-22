@@ -9,6 +9,8 @@ import androidx.room.Query;
 import com.example.fitnesstracker.Workout;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface WorkoutDao {
@@ -17,7 +19,7 @@ public interface WorkoutDao {
     public void insert(Workout workout);
 
     @Query("SELECT * FROM Workout")
-    public Workout getWorkout();
+    public List<Workout> getWorkout();
 
     @Query("SELECT sport FROM Workout")
     public String getSport();
