@@ -26,6 +26,9 @@ public interface ProfileDao {
     @Update
     public void updateWeight(int weight);
 */
+    @Query("SELECT * FROM Profile")
+    public Profile getProfile();
+
     @Query("SELECT name FROM Profile")
     public String getName();
 

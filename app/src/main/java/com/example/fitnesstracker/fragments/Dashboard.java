@@ -1,7 +1,5 @@
 package com.example.fitnesstracker.fragments;
 
-import android.content.Context;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,15 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.fitnesstracker.MainActivity;
 import com.example.fitnesstracker.Profile;
 import com.example.fitnesstracker.R;
-
-import java.util.Objects;
-import java.util.logging.Logger;
-
-import static androidx.core.content.ContextCompat.getSystemService;
-
 
 public class Dashboard extends Fragment {
 

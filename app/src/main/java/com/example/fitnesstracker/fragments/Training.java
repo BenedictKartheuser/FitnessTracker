@@ -14,7 +14,9 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.example.fitnesstracker.Profile;
 import com.example.fitnesstracker.R;
+import com.example.fitnesstracker.dao.ProfileDao;
 import com.example.fitnesstracker.dao.WorkoutDao;
 import com.example.fitnesstracker.Sport;
 import com.example.fitnesstracker.Workout;
@@ -24,8 +26,10 @@ public class Training extends Fragment {
     private Workout workout;
     private Sport sport;
     private int duration;
+    private Profile profile;
 
     private WorkoutDao workoutDao;
+    private ProfileDao profileDao;
 
     private AutoCompleteTextView addSport;
     private NumberPicker addDuration;
@@ -53,20 +57,36 @@ public class Training extends Fragment {
         setUpSportPicker();
         setUpDurationPicker();
 
+        profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
+        //profile = new LoadProfileTask().execute();
+
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View root) {
                 //Wo genau Sport herkommt muss noch geklärt werden
-                workout = new Workout(sport.toString(), duration);
-                //insert workout in Datenbank
+                workout = new Workout(sport.toString(), duration, profile.toString());
                 workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
-                new SaveTask().execute(workout);
+                new SaveWorkoutTask().execute(workout);
                 consumedCalories.setText(workout.getCalorieConsumption());
             }
         });
     }
 
-    class SaveTask extends AsyncTask<Workout, Void, Void> {
+    class LoadProfileTask extends AsyncTask<Void, Void, Profile>{
+
+        @Override
+        protected Profile doInBackground(Void... voids) {
+            return profileDao.getProfile();
+        }
+
+        @Override
+        protected  void onPostExecute(Profile profile){
+            super.onPostExecute(profile);
+
+        }
+    }
+
+    class SaveWorkoutTask extends AsyncTask<Workout, Void, Void> {
 
         @Override
         protected Void doInBackground(Workout... workouts) {

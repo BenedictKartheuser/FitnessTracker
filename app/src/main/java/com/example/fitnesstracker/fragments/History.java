@@ -16,7 +16,6 @@ import com.example.fitnesstracker.Workout;
 import com.example.fitnesstracker.dao.WorkoutDao;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +43,7 @@ public class History extends Fragment {
      * @param history - Liste aller workouts, wird vorher aus DB geladen
      * @return verbrauchte Kalorien der letzten Woche via getCalories Methode
      */
-    /*
+
     public int getLastWeekCalories(ArrayList<Workout> history) {
         int[] calories = new int[history.size()];
         Date workoutDate;
@@ -56,7 +55,7 @@ public class History extends Fragment {
             }
         }
         return getCalories(calories);
-    }*/
+    }
 
     /**
      *
@@ -84,7 +83,6 @@ public class History extends Fragment {
             //TODO
         }
         return date;
-
     }
 
     /**
@@ -100,21 +98,23 @@ public class History extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        View root = inflater.inflate(R.layout.fragment_history, container, false);
 
-        workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
-
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         adapter = new RecyclerViewAdapter(setUp());
         recyclerView.setAdapter(adapter);
-        new LadeWorkoutTask().execute();
 
-        // Inflate the layout for this fragment
-        return view;
+        workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
 
+        return root;
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        new LoadWorkoutTask().execute();
     }
 
     public List<Workout> getHistory() {
@@ -125,7 +125,7 @@ public class History extends Fragment {
         this.history = history;
     }
 
-    class LadeWorkoutTask extends AsyncTask<Void, Void, List<Workout>>{
+    class LoadWorkoutTask extends AsyncTask<Void, Void, List<Workout>>{
 
         @Override
         protected List<Workout> doInBackground(Void... voids) {

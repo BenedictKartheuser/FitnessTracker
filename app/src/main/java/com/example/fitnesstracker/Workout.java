@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.fitnesstracker.dao.ProfileDao;
+import com.example.fitnesstracker.fragments.FitnessDatabase;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,19 +17,13 @@ public class Workout {
     private String timestamp;
     private String sport;
     private int duration;
-
-    public void setProfile(String profile) {
-        this.profile = profile;
-    }
-
     private String profile;
     private int calorieConsumption;
 
-    public Workout(String sport, int duration) {
+    public Workout(String sport, int duration, String profile) {
         this.timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
         this.sport = sport;
         this.duration = duration;
-        //Profile aus db laden!
         this.profile = profile;
         this.calorieConsumption = calculateCalorieConsumption();
     }
@@ -64,6 +61,9 @@ public class Workout {
         return duration;
     }
 
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 
     public String getProfile() {
         return profile;
