@@ -99,7 +99,7 @@ public class Dashboard extends Fragment {
         }
 
         setContents(root);
-        setListeners(root);
+        setListeners();
 
         //nicht new History eigentlich, sondern History aus DB laden
         History history = new History();
@@ -115,7 +115,7 @@ public class Dashboard extends Fragment {
         editText.setText("Hallo"); //hier kommt dann Profile.getName() rein
     }
 
-    private void setListeners(View root) {
+    private void setListeners() {
         name_edit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -124,6 +124,32 @@ public class Dashboard extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 profileDao.updateName(charSequence.toString());
                 Log.println(Log.WARN, "1", "update");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        height_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                profileDao.updateHeight(Integer.parseInt(charSequence.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        weight_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                profileDao.updateWeight(Integer.parseInt(charSequence.toString()));
             }
 
             @Override
