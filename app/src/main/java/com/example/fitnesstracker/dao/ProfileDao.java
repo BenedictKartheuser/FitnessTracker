@@ -14,25 +14,22 @@ import java.util.List;
 @Dao
 public interface ProfileDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insert(Profile profile);
+    @Query("UPDATE Profile SET name = :name_")
+    void updateName(String name_);
 
-/*    @Update
-    public void updateName(String name);
+    @Query("UPDATE Profile SET name = :height_")
+    void updateHeight(int height_);
 
-    @Update
-    public void updateSize(int size);
+    @Query("UPDATE Profile SET name = :weigtht_")
+    void updateWeight(int weigtht_);
 
-    @Update
-    public void updateWeight(int weight);
-*/
     @Query("SELECT * FROM Profile")
     public Profile getProfile();
 
     @Query("SELECT name FROM Profile")
     public String getName();
 
-    @Query("SELECT size FROM Profile")
+    @Query("SELECT height FROM Profile")
     public int getSize();
 
     @Query("SELECT weight FROM Profile")

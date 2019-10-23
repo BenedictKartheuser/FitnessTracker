@@ -14,12 +14,12 @@ public class Profile {
 
     @PrimaryKey @NonNull
     private String name;
-    private int size;
+    private int height;
     private int weight;
 
-    public Profile(String name, int size, int weight) {
+    public Profile(String name, int height, int weight) {
         setName(name);
-        setSize(size);
+        setHeight(height);
         setWeight(weight);
     }
 
@@ -31,12 +31,12 @@ public class Profile {
         this.name = name;
     }
 
-    public int getSize() {
-        return size;
+    public int getHeight() {
+        return height;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getWeight() {
@@ -49,7 +49,7 @@ public class Profile {
 
     @Override @NonNull
     public String toString() {
-        return this.name + "," + this.getSize() + "," + this.getWeight();
+        return this.name + "," + this.getHeight() + "," + this.getWeight();
     }
 
 }

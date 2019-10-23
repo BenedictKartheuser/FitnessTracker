@@ -1,11 +1,15 @@
 package com.example.fitnesstracker.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.fitnesstracker.Profile;
 import com.example.fitnesstracker.R;
+import com.example.fitnesstracker.dao.ProfileDao;
 
 public class Dashboard extends Fragment {
 
@@ -25,37 +30,15 @@ public class Dashboard extends Fragment {
     private Profile profile;
     private int lastWeek;
 
+    ProfileDao profileDao;
 
-
-
-    public void setUp(View view) {
-        //Hier müsste profile aus der datenbank geladen werden
-        //profile = DAO;
-        if (profile == null) {
-            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
-        }
-        setContents(view);
-
-        //nicht new History eigentlich, sondern History aus DB laden
-        History history = new History();
-        //lastWeek = history.getLastWeekCalories(history.getHistory());
-    }
-
-    private void setContents(View view) {
-        //Hier werden die EditText Felder mit den Infos aus dem Profil befüllt
-        //... = profile.getName();
-        //... = profile.getSize();
-        //... = profile.getWeight();
-        EditText editText = (EditText)view.findViewById(R.id.name_edit);
-        editText.setText("Hallo"); //hier kommt dann Profile.getName() rein
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
+        profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
 
         addToView(root);
         changeOnState(root);
@@ -64,6 +47,27 @@ public class Dashboard extends Fragment {
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new Dashboard.LoadProfileTask().execute();
+    }
+
+    class LoadProfileTask extends AsyncTask<Void, Void, Profile> {
+
+        @Override
+        protected Profile doInBackground(Void... voids) {
+            return profileDao.getProfile();
+        }
+
+        @Override
+        protected  void onPostExecute(Profile loadedProfile){
+            profile = loadedProfile;
+            super.onPostExecute(profile);
+
+        }
     }
 
     public void addToView(View root){
@@ -87,14 +91,52 @@ public class Dashboard extends Fragment {
 
     }
 
+    public void setUp(View root) {
+        if (profile == null) {
+            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
+            Log.println(Log.WARN, "1", "hierr");
+            Log.println(Log.WARN, "1", String.valueOf(profile.getName()));
+        }
+
+        setContents(root);
+        setListeners(root);
+
+        //nicht new History eigentlich, sondern History aus DB laden
+        History history = new History();
+        //lastWeek = history.getLastWeekCalories(history.getHistory());
+    }
+
+    private void setContents(View view) {
+        //Hier werden die EditText Felder mit den Infos aus dem Profil befüllt
+        name_edit.setText(profile.getName());
+        height_edit.setText(Integer.toString(profile.getHeight()));
+        weight_edit.setText(Integer.toString(profile.getWeight()));
+        EditText editText = (EditText)view.findViewById(R.id.name_edit);
+        editText.setText("Hallo"); //hier kommt dann Profile.getName() rein
+    }
+
+    private void setListeners(View root) {
+        name_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                profileDao.updateName(charSequence.toString());
+                Log.println(Log.WARN, "1", "update");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+    }
+
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
     }
-
-
 
     public void changeOnState(View view){
         EditText weightText = view.findViewById(R.id.weight);

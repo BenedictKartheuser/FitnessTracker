@@ -58,7 +58,6 @@ public class Training extends Fragment {
         setUpDurationPicker();
 
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
-        //profile = new LoadProfileTask().execute();
 
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +71,12 @@ public class Training extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        new LoadProfileTask().execute();
+    }
+
     class LoadProfileTask extends AsyncTask<Void, Void, Profile>{
 
         @Override
@@ -80,7 +85,8 @@ public class Training extends Fragment {
         }
 
         @Override
-        protected  void onPostExecute(Profile profile){
+        protected  void onPostExecute(Profile loadedProfile){
+            profile = loadedProfile;
             super.onPostExecute(profile);
 
         }

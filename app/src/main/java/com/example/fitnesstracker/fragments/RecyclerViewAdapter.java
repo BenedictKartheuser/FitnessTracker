@@ -41,7 +41,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        CardView historyItem = holder.itemView.findViewById(R.id.history_item);
         TextView calories = holder.itemView.findViewById(R.id.calories);
         TextView sport = holder.itemView.findViewById(R.id.sport);
         TextView time = holder.itemView.findViewById(R.id.time);
