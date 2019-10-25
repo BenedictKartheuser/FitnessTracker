@@ -19,6 +19,7 @@ public class Workout {
     private int duration;
     private String profile;
     private int calorieConsumption;
+    private static final int MIN_PER_HOUR = 60;
 
     public Workout(String sport, int duration, String profile) {
         this.timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
@@ -31,7 +32,7 @@ public class Workout {
     private int calculateCalorieConsumption() {
         int weight = Integer.parseInt(profile.split(",")[2]);
         double factor = Double.parseDouble(sport.split(",")[1]);
-        return (int)(weight * factor * duration);
+        return (int) ((weight * factor * duration) / MIN_PER_HOUR);
     }
 
 

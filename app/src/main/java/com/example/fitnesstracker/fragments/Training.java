@@ -41,7 +41,6 @@ public class Training extends Fragment {
     private TextView consumedCalories;
 
     private boolean sportPicked = false;
-    private boolean durationPicked = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,8 +61,6 @@ public class Training extends Fragment {
         addDuration = root.findViewById(R.id.add_duration);
         addWorkout = root.findViewById(R.id.add_workout);
         consumedCalories = root.findViewById(R.id.consumed_calories);
-
-
     }
 
     private void setUp() {
@@ -73,13 +70,14 @@ public class Training extends Fragment {
         setUpDurationPicker();
 
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
-        Log.println(Log.WARN, "1", "Add listener");
+        profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
 
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.println(Log.WARN, "1", "Clicked Add Button");
-                if(!sportPicked || !durationPicked) {
+                Log.println(Log.WARN, "1", "Sport Picked: " + sportPicked);
+                if(!sportPicked) {
                     Log.println(Log.WARN, "1", "invalid input");
                     Toast.makeText(getContext(),"Make sure to choose sport and duration",Toast.LENGTH_SHORT).show();
                     return;
@@ -87,10 +85,10 @@ public class Training extends Fragment {
                 workout = new Workout(sport.toString(), duration, profile.toString());
                 workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
                 new SaveWorkoutTask().execute(workout);
-                consumedCalories.setText(workout.getCalorieConsumption());
+                consumedCalories.setText(Integer.toString(workout.getCalorieConsumption()));
 
+                Log.println(Log.WARN, "1", "" + sportPicked);
                 sportPicked = false;
-                durationPicked = false;
             }
         });
 
@@ -101,6 +99,16 @@ public class Training extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, sports);
         addSport.setThreshold(1);
         addSport.setAdapter(adapter);
+        addSport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String[] sports = getResources().getStringArray(R.array.sports_and_factor_array);
+                sport = new Sport(sports[(int) l]);
+                sportPicked = true;
+                Log.println(Log.WARN, "1", "" + l);
+                Log.println(Log.WARN, "1", "" + i);
+            }
+        });
     }
 
     private void setUpDurationPicker() {
@@ -114,12 +122,6 @@ public class Training extends Fragment {
                 duration = i1;
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        new LoadProfileTask().execute();
     }
 
     class LoadProfileTask extends AsyncTask<Void, Void, Profile>{

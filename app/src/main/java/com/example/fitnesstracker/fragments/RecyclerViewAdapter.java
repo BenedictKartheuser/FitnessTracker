@@ -45,9 +45,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView sport = holder.itemView.findViewById(R.id.sport);
         TextView time = holder.itemView.findViewById(R.id.time);
 
-        calories.setText(history.get(position).getCalorieConsumption());
-        sport.setText(history.get(position).getSport());
-        time.setText(history.get(position).getDuration() + " - " + history.get(position).getTimestamp());
+        calories.setText(Integer.toString(history.get(position).getCalorieConsumption()));
+        sport.setText(history.get(position).getSport().split(",")[0]);
+        time.setText("Duration: " + history.get(position).getDuration() + "min - Date: " + history.get(position).getTimestamp());
 
     }
 
