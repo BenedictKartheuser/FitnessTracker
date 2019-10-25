@@ -38,6 +38,14 @@ public class Dashboard extends Fragment {
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        setUp();
+
+        // Inflate the layout for this fragment
+        return root;
+    }
+
+    private void setUp() {
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
 
         addToView(root);
@@ -55,6 +63,14 @@ public class Dashboard extends Fragment {
         weight_edit.setText(Integer.toString(profile.getWeight()));
         name_edit.setText("test");
 
+        setEditTextListeners();
+
+        //nicht new History eigentlich, sondern History aus DB laden
+        History history = new History();
+        //lastWeek = history.getLastWeekCalories(history.getHistory());
+    }
+
+    private void setEditTextListeners() {
         name_edit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -94,14 +110,6 @@ public class Dashboard extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
-
-        //nicht new History eigentlich, sondern History aus DB laden
-        History history = new History();
-        //lastWeek = history.getLastWeekCalories(history.getHistory());
-
-
-        // Inflate the layout for this fragment
-        return root;
     }
 
     @Override

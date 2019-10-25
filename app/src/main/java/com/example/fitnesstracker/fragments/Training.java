@@ -59,7 +59,7 @@ public class Training extends Fragment {
         duration = 0;
 
         addSport = root.findViewById(R.id.add_sport);
-        addDuration = (NumberPicker)root.findViewById(R.id.add_duration);
+        addDuration = root.findViewById(R.id.add_duration);
         addWorkout = root.findViewById(R.id.add_workout);
         consumedCalories = root.findViewById(R.id.consumed_calories);
 
@@ -67,39 +67,10 @@ public class Training extends Fragment {
     }
 
     private void setUp() {
+
         duration = 0;
-
-
-
         setUpSportPicker();
         setUpDurationPicker();
-        String[] sports = getResources().getStringArray(R.array.sports_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sports);
-        addSport.setAdapter(adapter);
-        Log.println(Log.WARN, "1", "SportsPicker");
-        Log.println(Log.WARN, "1", "Available Sports: " + adapter.getCount());
-
-        addSport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.println(Log.WARN, "1", "" + l);
-                String[] sports = getResources().getStringArray(R.array.sports_and_factor_array);
-                sport = new Sport(sports[(int) l]);
-                sportPicked = true;
-            }
-        });
-
-        addDuration.setMinValue(1);
-        addDuration.setMaxValue(300);
-        addDuration.setWrapSelectorWheel(true);
-        addDuration.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                duration = i1;
-                durationPicked = true;
-            }
-        });
-
 
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
         Log.println(Log.WARN, "1", "Add listener");
@@ -125,20 +96,24 @@ public class Training extends Fragment {
 
     }
 
-    public void onClick(View root) {
-        Log.println(Log.WARN, "1", "Clicked Add Button");
-        if(!sportPicked || !durationPicked) {
-            Log.println(Log.WARN, "1", "invalid input");
-            Toast.makeText(getContext(),"Make sure to choose sport and duration",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        workout = new Workout(sport.toString(), duration, profile.toString());
-        workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
-        new SaveWorkoutTask().execute(workout);
-        consumedCalories.setText(workout.getCalorieConsumption());
+    private void setUpSportPicker() {
+        String[] sports = getResources().getStringArray(R.array.sports_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, sports);
+        addSport.setThreshold(1);
+        addSport.setAdapter(adapter);
+    }
 
-        sportPicked = false;
-        durationPicked = false;
+    private void setUpDurationPicker() {
+
+        addDuration.setMaxValue(300);
+        addDuration.setMinValue(1);
+        addDuration.setWrapSelectorWheel(true);
+        addDuration.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                duration = i1;
+            }
+        });
     }
 
     @Override
@@ -174,25 +149,5 @@ public class Training extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
         }
-    }
-
-    private void setUpSportPicker() {
-        String[] sports = getResources().getStringArray(R.array.sports_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, sports);
-        addSport.setThreshold(1);
-        addSport.setAdapter(adapter);
-    }
-
-    private void setUpDurationPicker() {
-
-        addDuration.setMaxValue(300);
-        addDuration.setMinValue(1);
-        addDuration.setWrapSelectorWheel(true);
-        addDuration.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                duration = i1;
-            }
-        });
     }
 }
