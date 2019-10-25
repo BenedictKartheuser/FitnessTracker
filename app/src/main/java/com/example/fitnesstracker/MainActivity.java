@@ -33,8 +33,6 @@ import static androidx.core.content.ContextCompat.getSystemService;
 
 public class MainActivity extends AppCompatActivity {
 
-    //kommt die Logik überhaupt hier rein?
-    //oder braucht man ne Klasse App?
     private Profile profile;
 
     private Dashboard dashFrag;

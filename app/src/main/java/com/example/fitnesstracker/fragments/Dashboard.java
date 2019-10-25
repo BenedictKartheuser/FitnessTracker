@@ -42,11 +42,66 @@ public class Dashboard extends Fragment {
 
         addToView(root);
         changeOnState(root);
-        setUp(root);
+
+        if (profile == null) {
+            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
+            Log.println(Log.WARN, "1", "setUp");
+            Log.println(Log.WARN, "1", String.valueOf(profile.getName()));
+        }
+
+        //Hier werden die EditText Felder mit den Infos aus dem Profil befüllt
+        name_edit.setText(profile.getName());
+        height_edit.setText(Integer.toString(profile.getHeight()));
+        weight_edit.setText(Integer.toString(profile.getWeight()));
+        name_edit.setText("test");
+
+        name_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                profileDao.updateName(charSequence.toString());
+                Log.println(Log.WARN, "1", "update");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        height_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                profileDao.updateHeight(Integer.parseInt(charSequence.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        weight_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                profileDao.updateWeight(Integer.parseInt(charSequence.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        //nicht new History eigentlich, sondern History aus DB laden
+        History history = new History();
+        //lastWeek = history.getLastWeekCalories(history.getHistory());
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        return root;
     }
 
     @Override
@@ -89,72 +144,6 @@ public class Dashboard extends Fragment {
         dash_card = root.findViewById(R.id.card_view);
 
 
-    }
-
-    public void setUp(View root) {
-        if (profile == null) {
-            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
-            Log.println(Log.WARN, "1", "hierr");
-            Log.println(Log.WARN, "1", String.valueOf(profile.getName()));
-        }
-
-        setContents(root);
-        setListeners();
-
-        //nicht new History eigentlich, sondern History aus DB laden
-        History history = new History();
-        //lastWeek = history.getLastWeekCalories(history.getHistory());
-    }
-
-    private void setContents(View view) {
-        //Hier werden die EditText Felder mit den Infos aus dem Profil befüllt
-        name_edit.setText(profile.getName());
-        height_edit.setText(Integer.toString(profile.getHeight()));
-        weight_edit.setText(Integer.toString(profile.getWeight()));
-        EditText editText = (EditText)view.findViewById(R.id.name_edit);
-        editText.setText("Hallo"); //hier kommt dann Profile.getName() rein
-    }
-
-    private void setListeners() {
-        name_edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                profileDao.updateName(charSequence.toString());
-                Log.println(Log.WARN, "1", "update");
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
-
-        height_edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                profileDao.updateHeight(Integer.parseInt(charSequence.toString()));
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
-
-        weight_edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                profileDao.updateWeight(Integer.parseInt(charSequence.toString()));
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
     }
 
 
