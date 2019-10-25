@@ -29,6 +29,9 @@ public class Dashboard extends Fragment {
     private CardView dash_card;
     private Profile profile;
     private int lastWeek;
+    private String profileName;
+    private int heightValue;
+    private int weightValue;
 
     ProfileDao profileDao;
 
@@ -77,7 +80,8 @@ public class Dashboard extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                profileDao.updateName(charSequence.toString());
+                profileName = charSequence.toString();
+                new ChangeNameTask().execute(profileName);
                 Log.println(Log.WARN, "1", "update");
             }
 
@@ -91,7 +95,8 @@ public class Dashboard extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                profileDao.updateHeight(Integer.parseInt(charSequence.toString()));
+                heightValue = Integer.parseInt(charSequence.toString());
+                new ChangeHeightTask().execute();
             }
 
             @Override
@@ -104,12 +109,56 @@ public class Dashboard extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                profileDao.updateWeight(Integer.parseInt(charSequence.toString()));
+                weightValue = Integer.parseInt(charSequence.toString());
+                new ChangeWeightTask().execute(weightValue);
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+    }
+
+    class ChangeNameTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            profileDao.updateName(profileName);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    class ChangeWeightTask extends AsyncTask<Integer, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Integer... ints) {
+            profileDao.updateWeight(weightValue);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    class ChangeHeightTask extends AsyncTask<Integer, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Integer... ints) {
+            profileDao.updateHeight(heightValue);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
     }
 
     @Override
