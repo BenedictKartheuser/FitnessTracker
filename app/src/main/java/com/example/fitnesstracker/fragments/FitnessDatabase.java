@@ -14,7 +14,7 @@ import com.example.fitnesstracker.dao.ProfileDao;
 import com.example.fitnesstracker.dao.SportDao;
 import com.example.fitnesstracker.dao.WorkoutDao;
 
-@Database(entities = {Profile.class, Sport.class, Workout.class}, version = 1, exportSchema = false)
+@Database(entities = {Profile.class, Sport.class, Workout.class}, version = 2, exportSchema = false)
 public abstract class FitnessDatabase extends RoomDatabase {
 
     public abstract ProfileDao profileDao();
@@ -24,6 +24,7 @@ public abstract class FitnessDatabase extends RoomDatabase {
     private static FitnessDatabase INSTANCE;
 
     static FitnessDatabase getDatabase(Context context){
+
         if (INSTANCE == null){
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     FitnessDatabase.class, "fitness_database").build();

@@ -24,7 +24,7 @@ import com.example.fitnesstracker.dao.WorkoutDao;
 import com.example.fitnesstracker.Sport;
 import com.example.fitnesstracker.Workout;
 
-public class Training extends Fragment implements View.OnClickListener {
+public class Training extends Fragment {
 
     private Workout workout;
     private Sport sport;
@@ -34,6 +34,7 @@ public class Training extends Fragment implements View.OnClickListener {
     private WorkoutDao workoutDao;
     private ProfileDao profileDao;
 
+    private View root;
     private AutoCompleteTextView addSport;
     private NumberPicker addDuration;
     private Button addWorkout;
@@ -45,15 +46,33 @@ public class Training extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_training, container, false);
+        root = inflater.inflate(R.layout.fragment_training, container, false);
+        addToView(root);
+        setUp();
 
+
+        // Inflate the layout for this fragment
+        return root;
+    }
+
+    public void addToView(View root){
         duration = 0;
 
         addSport = root.findViewById(R.id.add_sport);
-        addDuration = root.findViewById(R.id.add_duration);
+        addDuration = (NumberPicker)root.findViewById(R.id.add_duration);
         addWorkout = root.findViewById(R.id.add_workout);
         consumedCalories = root.findViewById(R.id.consumed_calories);
 
+
+    }
+
+    private void setUp() {
+        duration = 0;
+
+
+
+        setUpSportPicker();
+        setUpDurationPicker();
         String[] sports = getResources().getStringArray(R.array.sports_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sports);
         addSport.setAdapter(adapter);
@@ -85,9 +104,25 @@ public class Training extends Fragment implements View.OnClickListener {
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
         Log.println(Log.WARN, "1", "Add listener");
 
-        addWorkout.setOnClickListener(this);
-        // Inflate the layout for this fragment
-        return root;
+        addWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.println(Log.WARN, "1", "Clicked Add Button");
+                if(!sportPicked || !durationPicked) {
+                    Log.println(Log.WARN, "1", "invalid input");
+                    Toast.makeText(getContext(),"Make sure to choose sport and duration",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                workout = new Workout(sport.toString(), duration, profile.toString());
+                workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
+                new SaveWorkoutTask().execute(workout);
+                consumedCalories.setText(workout.getCalorieConsumption());
+
+                sportPicked = false;
+                durationPicked = false;
+            }
+        });
+
     }
 
     public void onClick(View root) {
@@ -139,5 +174,25 @@ public class Training extends Fragment implements View.OnClickListener {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
         }
+    }
+
+    private void setUpSportPicker() {
+        String[] sports = getResources().getStringArray(R.array.sports_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, sports);
+        addSport.setThreshold(1);
+        addSport.setAdapter(adapter);
+    }
+
+    private void setUpDurationPicker() {
+
+        addDuration.setMaxValue(300);
+        addDuration.setMinValue(1);
+        addDuration.setWrapSelectorWheel(true);
+        addDuration.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                duration = i1;
+            }
+        });
     }
 }
