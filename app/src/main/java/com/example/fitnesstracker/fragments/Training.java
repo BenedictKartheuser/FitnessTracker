@@ -118,7 +118,8 @@ public class Training extends Fragment {
 
     private void setUpSportPicker() {
         String[] sports = getResources().getStringArray(R.array.sports_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, sports);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, sports);
+        addSport.setThreshold(1);
         addSport.setAdapter(adapter);
     }
 
