@@ -17,11 +17,11 @@ public interface ProfileDao {
     @Query("UPDATE Profile SET name = :name_")
     void updateName(String name_);
 
-    @Query("UPDATE Profile SET name = :height_")
+    @Query("UPDATE Profile SET height = :height_")
     void updateHeight(int height_);
 
-    @Query("UPDATE Profile SET name = :weigtht_")
-    void updateWeight(int weigtht_);
+    @Query("UPDATE Profile SET weight = :weight_")
+    void updateWeight(int weight_);
 
     @Query("SELECT * FROM Profile")
     public Profile getProfile();

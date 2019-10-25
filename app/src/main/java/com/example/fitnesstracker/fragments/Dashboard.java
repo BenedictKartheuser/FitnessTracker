@@ -96,7 +96,7 @@ public class Dashboard extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 heightValue = Integer.parseInt(charSequence.toString());
-                new ChangeHeightTask().execute();
+                new ChangeHeightTask().execute(heightValue);
             }
 
             @Override

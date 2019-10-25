@@ -2,6 +2,7 @@ package com.example.fitnesstracker;
 
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -14,7 +15,11 @@ public class Profile {
 
     @PrimaryKey @NonNull
     private String name;
+
+    @ColumnInfo (name = "height")
     private int height;
+
+    @ColumnInfo (name = "weight")
     private int weight;
 
     public Profile(String name, int height, int weight) {
