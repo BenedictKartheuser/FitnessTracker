@@ -31,6 +31,7 @@ public class Training extends Fragment {
     private WorkoutDao workoutDao;
     private ProfileDao profileDao;
 
+    private View root;
     private AutoCompleteTextView addSport;
     private NumberPicker addDuration;
     private Button addWorkout;
@@ -39,20 +40,29 @@ public class Training extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_training, container, false);
+        root = inflater.inflate(R.layout.fragment_training, container, false);
+        addToView(root);
+        setUp();
 
-        setUp(root);
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_training, container, false);
     }
 
-    private void setUp(View root) {
-        duration = 0;
+    public void addToView(View root){
 
         addSport = root.findViewById(R.id.add_sport);
-        addDuration = root.findViewById(R.id.add_duration);
+        addDuration = (NumberPicker)root.findViewById(R.id.add_duration);
         addWorkout = root.findViewById(R.id.add_workout);
         consumedCalories = root.findViewById(R.id.consumed_calories);
+
+
+    }
+
+    private void setUp() {
+        duration = 0;
+
+
 
         setUpSportPicker();
         setUpDurationPicker();
@@ -114,8 +124,8 @@ public class Training extends Fragment {
 
     private void setUpDurationPicker() {
 
-        addDuration.setMinValue(1);
         addDuration.setMaxValue(300);
+        addDuration.setMinValue(1);
         addDuration.setWrapSelectorWheel(true);
         addDuration.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
