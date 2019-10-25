@@ -58,7 +58,9 @@ public class Dashboard extends Fragment {
             profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
             Log.println(Log.WARN, "1", "setUp");
             Log.println(Log.WARN, "1", String.valueOf(profile.getName()));
-        }
+        } /*else {
+            profile = new LoadProfileTask().execute();
+        }*/
 
         //Hier werden die EditText Felder mit den Infos aus dem Profil befüllt
         name_edit.setText(profile.getName());
