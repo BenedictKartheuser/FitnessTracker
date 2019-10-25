@@ -1,6 +1,7 @@
 package com.example.fitnesstracker;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,6 +10,8 @@ public class Sport {
 
     @PrimaryKey @NonNull
     private String name;
+
+    @ColumnInfo(name = "factor")
     private double factor;
 
     //refactorn

@@ -1,6 +1,7 @@
 package com.example.fitnesstracker;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,9 +16,17 @@ public class Workout {
 
     @PrimaryKey @NonNull
     private String timestamp;
+
+    @ColumnInfo(name = "sport")
     private String sport;
+
+    @ColumnInfo (name = "duration")
     private int duration;
+
+    @ColumnInfo (name = "profile")
     private String profile;
+
+    @ColumnInfo (name = "calorieConsumption")
     private int calorieConsumption;
     private static final int MIN_PER_HOUR = 60;
 
