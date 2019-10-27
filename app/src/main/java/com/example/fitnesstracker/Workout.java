@@ -31,7 +31,7 @@ public class Workout {
     private static final int MIN_PER_HOUR = 60;
 
     public Workout(String sport, int duration, String profile) {
-        this.timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
+        this.timestamp = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         this.sport = sport;
         this.duration = duration;
         this.profile = profile;
