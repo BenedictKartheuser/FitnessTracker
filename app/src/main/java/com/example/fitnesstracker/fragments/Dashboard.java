@@ -39,8 +39,8 @@ public class Dashboard extends Fragment {
 
     private List<Workout> workouts;
 
-    ProfileDao profileDao;
-    WorkoutDao workoutDao;
+    private ProfileDao profileDao;
+    private WorkoutDao workoutDao;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -64,22 +64,19 @@ public class Dashboard extends Fragment {
         if (profile == null) {
             profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
             Log.println(Log.WARN, "1", "setUp");
-            Log.println(Log.WARN, "1", String.valueOf(profile.getName()));
+            Log.println(Log.WARN, "1", profile.getName());
         } /*else {
             profile = new LoadProfileTask().execute();
         }*/
 
         //Hier werden die EditText Felder mit den Infos aus dem Profil befüllt
         name_edit.setText(profile.getName());
-        height_edit.setText(Integer.toString(profile.getHeight()));
-        weight_edit.setText(Integer.toString(profile.getWeight()));
-        name_edit.setText("test");
+        height_edit.setText(String.valueOf(profile.getHeight()));
+        weight_edit.setText(String.valueOf(profile.getWeight()));
 
         setEditTextListeners();
 
         //nicht new History eigentlich, sondern History aus DB laden
-        History history = new History();
-        //lastWeek = history.getLastWeekCalories(history.getHistory());
     }
 
     private void setEditTextListeners() {
@@ -190,7 +187,8 @@ public class Dashboard extends Fragment {
             workouts = history;
             lastWeek = History.getLastWeekCalories(workouts);
             Log.println(Log.WARN, "1", "LastWeek Calories" + lastWeek);
-            kcal_text.setText(lastWeek + " kcal");
+            String kcalText = lastWeek + "kcal";
+            kcal_text.setText(kcalText);
         }
     }
 

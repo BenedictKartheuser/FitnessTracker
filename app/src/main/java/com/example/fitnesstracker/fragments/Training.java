@@ -3,6 +3,7 @@ package com.example.fitnesstracker.fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -34,7 +35,6 @@ public class Training extends Fragment {
     private WorkoutDao workoutDao;
     private ProfileDao profileDao;
 
-    private View root;
     private AutoCompleteTextView addSport;
     private NumberPicker addDuration;
     private Button addWorkout;
@@ -45,7 +45,7 @@ public class Training extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_training, container, false);
+        View root = inflater.inflate(R.layout.fragment_training, container, false);
         addToView(root);
         setUp();
 
@@ -54,7 +54,7 @@ public class Training extends Fragment {
         return root;
     }
 
-    public void addToView(View root){
+    private void addToView(View root){
         duration = 0;
 
         addSport = root.findViewById(R.id.add_sport);
@@ -78,16 +78,13 @@ public class Training extends Fragment {
                 Log.println(Log.WARN, "1", "Clicked Add Button");
                 Log.println(Log.WARN, "1", "Sport Picked: " + sportPicked);
                 if(!sportPicked) {
-                    Log.println(Log.WARN, "1", "invalid input");
                     Toast.makeText(getContext(),"Make sure to choose sport and duration",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 workout = new Workout(sport.toString(), duration, profile.toString());
                 workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
                 new SaveWorkoutTask().execute(workout);
-                consumedCalories.setText(Integer.toString(workout.getCalorieConsumption()));
-
-                Log.println(Log.WARN, "1", "" + sportPicked);
+                consumedCalories.setText(String.valueOf(workout.getCalorieConsumption()));
                 resetInputFields();
             }
         });
@@ -111,8 +108,8 @@ public class Training extends Fragment {
                 String[] sports = getResources().getStringArray(R.array.sports_and_factor_array);
                 sport = new Sport(sports[(int) l]);
                 sportPicked = true;
-                Log.println(Log.WARN, "1", "" + l);
-                Log.println(Log.WARN, "1", "" + i);
+                Log.println(Log.WARN, "1", "Position: " + i);
+                Log.println(Log.WARN, "1", "Was weiss ich: " + l);
             }
         });
     }
@@ -122,6 +119,7 @@ public class Training extends Fragment {
         addDuration.setMaxValue(300);
         addDuration.setMinValue(1);
         addDuration.setWrapSelectorWheel(true);
+        duration = 1;
         addDuration.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {

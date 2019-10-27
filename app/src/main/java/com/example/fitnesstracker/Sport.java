@@ -25,6 +25,7 @@ public class Sport {
         this.factor = factor;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
@@ -37,7 +38,7 @@ public class Sport {
         return factor;
     }
 
-    public void setFactor(double factor) {
+    private void setFactor(double factor) {
         this.factor = factor;
     }
 

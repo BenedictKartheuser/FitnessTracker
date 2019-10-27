@@ -28,6 +28,7 @@ public class Profile {
         setWeight(weight);
     }
 
+    @NonNull
     public String getName() {
         return name;
     }

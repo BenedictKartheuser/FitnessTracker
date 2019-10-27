@@ -5,9 +5,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.fitnesstracker.dao.ProfileDao;
-import com.example.fitnesstracker.fragments.FitnessDatabase;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -55,10 +52,11 @@ public class Workout {
         this.calorieConsumption = calorieConsumption;
     }
 
+    @NonNull
     public String getTimestamp() {
         return timestamp;
     }
-
+    
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
@@ -69,10 +67,6 @@ public class Workout {
 
     public int getDuration() {
         return duration;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
     }
 
     public String getProfile() {

@@ -22,17 +22,10 @@ import java.util.List;
 
 public class History extends Fragment {
 
-    private List<Workout> history;
-    final static long DAY_IN_MS = 1000 * 60 * 60 * 24;
+    private final static long DAY_IN_MS = 1000 * 60 * 60 * 24;
 
     private RecyclerViewAdapter adapter;
     private WorkoutDao workoutDao;
-
-
-    private List<Workout> setUp() {
-        history = new ArrayList<Workout>();
-        return history;
-    }
 
     /**
      * Berechnet verbrauchte Kalorien der letzten Woche
@@ -62,8 +55,9 @@ public class History extends Fragment {
      */
     private static int getCalories(int[] calories) {
         int lastWeekCalories = 0;
-        for (int i = 0; i < calories.length; i++) {
-            lastWeekCalories += calories[i];
+
+        for (int i : calories) {
+            lastWeekCalories += i;
         }
         return lastWeekCalories;
     }
@@ -76,7 +70,7 @@ public class History extends Fragment {
     private static Date getDateFromWorkout(Workout workout) {
         Date date = new Date();
         try {
-            date =  new SimpleDateFormat("dd-MM-yyyy").parse(workout.toString().substring(0, 10));
+            date =  new SimpleDateFormat("dd-MM-yyyy").parse(workout.toString());
         } catch (Exception e) {
             //TODO
         }
@@ -98,10 +92,10 @@ public class History extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_history, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        adapter = new RecyclerViewAdapter(setUp());
+        adapter = new RecyclerViewAdapter(new ArrayList<Workout>());
         recyclerView.setAdapter(adapter);
         workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
 
@@ -126,13 +120,5 @@ public class History extends Fragment {
             super.onPostExecute(history);
             adapter.setHistory(history);
         }
-    }
-
-    public List<Workout> getHistory() {
-        return history;
-    }
-
-    public void setHistory(List<Workout> history) {
-        this.history = history;
     }
 }
