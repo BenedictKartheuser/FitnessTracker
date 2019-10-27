@@ -30,8 +30,6 @@ public class History extends Fragment {
 
 
     private List<Workout> setUp() {
-        //History aus DB laden
-        //history = ;
         history = new ArrayList<Workout>();
         return history;
     }
@@ -44,7 +42,7 @@ public class History extends Fragment {
      * @return verbrauchte Kalorien der letzten Woche via getCalories Methode
      */
 
-    public int getLastWeekCalories(ArrayList<Workout> history) {
+    public static int getLastWeekCalories(List<Workout> history) {
         int[] calories = new int[history.size()];
         Date workoutDate;
         Date lastWeek = getDateFromLastWeek();
@@ -62,7 +60,7 @@ public class History extends Fragment {
      * @param calories Array mit allen verbrauchten Kalorien der letzten Woche
      * @return Gesamtverbrauch
      */
-    private int getCalories(int[] calories) {
+    private static int getCalories(int[] calories) {
         int lastWeekCalories = 0;
         for (int i = 0; i < calories.length; i++) {
             lastWeekCalories += calories[i];
@@ -75,7 +73,7 @@ public class History extends Fragment {
      * @param workout - einzelnes Workout
      * @return Datum des workouts
      */
-    private Date getDateFromWorkout(Workout workout) {
+    private static Date getDateFromWorkout(Workout workout) {
         Date date = new Date();
         try {
             date =  new SimpleDateFormat("dd-MM-yyyy").parse(workout.toString().substring(0, 10));
@@ -89,7 +87,7 @@ public class History extends Fragment {
      *
      * @return Datumsobjekt der letzten Woche
      */
-    private Date getDateFromLastWeek() {
+    private static Date getDateFromLastWeek() {
         return new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
     }
 
@@ -105,7 +103,6 @@ public class History extends Fragment {
 
         adapter = new RecyclerViewAdapter(setUp());
         recyclerView.setAdapter(adapter);
-
         workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
 
         return root;
@@ -115,14 +112,6 @@ public class History extends Fragment {
     public void onResume() {
         super.onResume();
         new LoadWorkoutTask().execute();
-    }
-
-    public List<Workout> getHistory() {
-        return history;
-    }
-
-    public void setHistory(List<Workout> history) {
-        this.history = history;
     }
 
     class LoadWorkoutTask extends AsyncTask<Void, Void, List<Workout>>{
@@ -137,5 +126,13 @@ public class History extends Fragment {
             super.onPostExecute(history);
             adapter.setHistory(history);
         }
+    }
+
+    public List<Workout> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<Workout> history) {
+        this.history = history;
     }
 }

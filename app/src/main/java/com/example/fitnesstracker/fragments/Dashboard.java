@@ -19,7 +19,11 @@ import android.widget.TextView;
 
 import com.example.fitnesstracker.Profile;
 import com.example.fitnesstracker.R;
+import com.example.fitnesstracker.Workout;
 import com.example.fitnesstracker.dao.ProfileDao;
+import com.example.fitnesstracker.dao.WorkoutDao;
+
+import java.util.List;
 
 public class Dashboard extends Fragment {
 
@@ -33,8 +37,10 @@ public class Dashboard extends Fragment {
     private int heightValue;
     private int weightValue;
 
-    ProfileDao profileDao;
+    private List<Workout> workouts;
 
+    ProfileDao profileDao;
+    WorkoutDao workoutDao;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -50,6 +56,7 @@ public class Dashboard extends Fragment {
 
     private void setUp() {
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
+        workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
 
         addToView(root);
         changeOnState(root);
@@ -167,6 +174,24 @@ public class Dashboard extends Fragment {
     public void onResume() {
         super.onResume();
         new Dashboard.LoadProfileTask().execute();
+        new Dashboard.LoadWorkoutTask().execute();
+    }
+
+    class LoadWorkoutTask extends AsyncTask<Void, Void, List<Workout>>{
+
+        @Override
+        protected List<Workout> doInBackground(Void... voids) {
+            return workoutDao.getWorkout();
+        }
+
+        @Override
+        protected  void onPostExecute(List<Workout> history){
+            super.onPostExecute(history);
+            workouts = history;
+            lastWeek = History.getLastWeekCalories(workouts);
+            Log.println(Log.WARN, "1", "LastWeek Calories" + lastWeek);
+            kcal_text.setText(lastWeek + " kcal");
+        }
     }
 
     class LoadProfileTask extends AsyncTask<Void, Void, Profile> {
@@ -184,7 +209,7 @@ public class Dashboard extends Fragment {
         }
     }
 
-    public void addToView(View root){
+    private void addToView(View root){
 
         //TextView
         hello_text = root.findViewById(R.id.hello_text);
@@ -206,13 +231,13 @@ public class Dashboard extends Fragment {
     }
 
 
-    public void hideKeyboard(View view) {
+    private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
     }
 
-    public void changeOnState(View view){
+    private void changeOnState(View view){
         EditText weightText = view.findViewById(R.id.weight);
         EditText heightText = view.findViewById(R.id.height);
         EditText helloText = view.findViewById(R.id.name_edit);
