@@ -88,10 +88,16 @@ public class Training extends Fragment {
                 consumedCalories.setText(Integer.toString(workout.getCalorieConsumption()));
 
                 Log.println(Log.WARN, "1", "" + sportPicked);
-                sportPicked = false;
+                resetInputFields();
             }
         });
 
+    }
+
+    private void resetInputFields() {
+        sportPicked = false;
+        addSport.setText("");
+        addDuration.setValue(1);
     }
 
     private void setUpSportPicker() {
