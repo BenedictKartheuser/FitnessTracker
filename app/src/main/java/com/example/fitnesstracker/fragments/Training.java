@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +51,7 @@ public class Training extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_training, container, false);
         addToView(root);
-        setUp();
+        setUp(root);
 
 
         // Inflate the layout for this fragment
@@ -71,11 +73,12 @@ public class Training extends Fragment {
         consumedCalories = root.findViewById(R.id.consumed_calories);
     }
 
-    private void setUp() {
+    private void setUp(View root) {
 
         duration = 0;
         setUpSportPicker();
         setUpDurationPicker();
+        changeOnState(root);
 
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
         profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
@@ -134,6 +137,35 @@ public class Training extends Fragment {
                 duration = i1;
             }
         });
+    }
+
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+    }
+
+    private void changeOnState(View view){
+
+        addSport.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    hideKeyboard(view);
+
+                }
+            }
+        });
+
+        addDuration.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    hideKeyboard(view);
+                }
+            }
+        });
+
     }
 
     class LoadProfileTask extends AsyncTask<Void, Void, List<Profile>> {

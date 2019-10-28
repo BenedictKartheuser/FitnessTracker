@@ -3,16 +3,16 @@
     <string-array name="sports_array">
         <item>Badminton</item>
         <item>Basketball</item>
-        <item>Biking (15-25 km/h)</item>
-        <item>Biking (25-30 km/h)</item>
-        <item>Biking (30-35 km/h)</item>
+        <item>Biking (15–25 km/h)</item>
+        <item>Biking (25–30 km/h)</item>
+        <item>Biking (30–35km/h)</item>
         <item>Bodybuilding</item>
         <item>Football</item>
         <item>Gymnastics</item>
         <item>Handball</item>
-        <item>Jogging (7-10 km/h)</item>
-        <item>Jogging (11-14 km/h)</item>
-        <item>Jogging (15-18 kmh/h)</item>
+        <item>Jogging (7–10 km/h)</item>
+        <item>Jogging (11–14 km/h)</item>
+        <item>Jogging (15–18 kmh/h)</item>
         <item>Swimming</item>
         <item>Ski</item>
         <item>Tennis</item>
