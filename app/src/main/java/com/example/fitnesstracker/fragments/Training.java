@@ -56,6 +56,12 @@ public class Training extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        new LoadProfileTask().execute();
+    }
+
     private void addToView(View root){
         duration = 0;
 
@@ -130,7 +136,7 @@ public class Training extends Fragment {
         });
     }
 
-    class LoadProfileTask extends AsyncTask<Void, Void, List<Profile>>{
+    class LoadProfileTask extends AsyncTask<Void, Void, List<Profile>> {
 
         @Override
         protected List<Profile> doInBackground(Void... voids) {
@@ -139,7 +145,13 @@ public class Training extends Fragment {
 
         @Override
         protected  void onPostExecute(List<Profile> loadedProfile){
-            profile = loadedProfile.get(0);
+            if (loadedProfile == null) {
+                profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
+                Log.println(Log.WARN, "1", "Training: Loaded Profile = null");
+            } else {
+                Log.println(Log.WARN, "1", "Training: Could load Profile: " + loadedProfile.get(0));
+                profile = loadedProfile.get(0);
+            }
             super.onPostExecute(loadedProfile);
 
         }

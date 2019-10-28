@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +38,15 @@ public class History extends Fragment {
      */
 
     public static int getLastWeekCalories(List<Workout> history) {
+        Log.println(Log.WARN, "1", "Size: " + history.size());
         int[] calories = new int[history.size()];
         Date workoutDate;
         Date lastWeek = getDateFromLastWeek();
         for (int i = 0; i < history.size(); i++) {
             workoutDate = getDateFromWorkout(history.get(i));
             if (workoutDate.compareTo(lastWeek) > 0) {
-                calories[i] = history.get(i).calculateCalorieConsumption(history.get(i));
+                calories[i] = history.get(i).getCalorieConsumption();
+                Log.println(Log.WARN, "1", "Workout " + (i+1) + ": " + history.get(i));
             }
         }
         return getCalories(calories);
