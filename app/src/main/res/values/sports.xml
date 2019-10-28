@@ -21,16 +21,16 @@
     <string-array name="sports_and_factor_array">
         <item>Badminton,11.5</item>
         <item>Basketball,16.5</item>
-        <item>Biking (15-25 km/h),7.5</item>
-        <item>Biking (25-30 km/h),9.5</item>
-        <item>Biking (30-35 km/h),11.5</item>
+        <item>Biking (15–25 km/h),7.5</item>
+        <item>Biking (25–30 km/h),9.5</item>
+        <item>Biking (30–35 km/h),11.5</item>
         <item>Bodybuilding,7</item>
         <item>Football,12</item>
         <item>Gymnastics,14</item>
         <item>Handball,13.5</item>
-        <item>Jogging (7-10 km/h),7.5</item>
-        <item>Jogging (11-14 km/h),11.5</item>
-        <item>Jogging (15-18 kmh/h),14.5</item>
+        <item>Jogging (7–10 km/h),7.5</item>
+        <item>Jogging (11–14 km/h),11.5</item>
+        <item>Jogging (15–18 kmh/h),14.5</item>
         <item>Swimming,7.5</item>
         <item>Ski,13</item>
         <item>Tennis,7.5</item>
