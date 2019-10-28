@@ -69,7 +69,12 @@ public class Dashboard extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                profileName = charSequence.toString();
+                if(charSequence.toString().isEmpty()) {
+                    profileName = "user";
+                    name_edit.setText("User");
+                } else {
+                    profileName = charSequence.toString();
+                }
                 new ChangeNameTask().execute(profileName);
                 Log.println(Log.WARN, "1", "update");
             }
@@ -84,7 +89,12 @@ public class Dashboard extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                heightValue = Integer.parseInt(charSequence.toString());
+                if(charSequence.toString().isEmpty()) {
+                    heightValue = 1;
+                    height_edit.setText("1");
+                } else {
+                    heightValue = Integer.parseInt(charSequence.toString());
+                }
                 new ChangeHeightTask().execute(heightValue);
             }
 
@@ -98,7 +108,12 @@ public class Dashboard extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                weightValue = Integer.parseInt(charSequence.toString());
+                if (charSequence.toString().isEmpty()) {
+                    weightValue = 1;
+                    weight_edit.setText("1");
+                } else {
+                    weightValue = Integer.parseInt(charSequence.toString());
+                }
                 new ChangeWeightTask().execute(weightValue);
 
             }
