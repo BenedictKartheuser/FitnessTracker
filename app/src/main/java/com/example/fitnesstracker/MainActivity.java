@@ -3,37 +3,21 @@ package com.example.fitnesstracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.navigation.fragment.*;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 
-import com.example.fitnesstracker.dao.ProfileDao;
-import com.example.fitnesstracker.dao.SportDao;
-import com.example.fitnesstracker.dao.WorkoutDao;
 import com.example.fitnesstracker.fragments.Dashboard;
 import com.example.fitnesstracker.fragments.History;
 import com.example.fitnesstracker.fragments.HowTo;
 import com.example.fitnesstracker.fragments.Training;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 public class MainActivity extends AppCompatActivity {
-
-    private Profile profile;
 
     private Dashboard dashFrag;
     private Training trainFrag;
@@ -143,20 +127,4 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-    public void setUp() {
-        //Hier müsste profile aus der datenbank geladen werden
-        //profile = DAO;
-        if (profile == null) {
-            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
-        }
-
-        //History (?) muss aus DB geladen werden
-        //history = ?
-    }
-
-
-
-
-
 }

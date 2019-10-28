@@ -5,7 +5,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.fitnesstracker.Profile;
 
@@ -13,6 +12,9 @@ import java.util.List;
 
 @Dao
 public interface ProfileDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertProfile(Profile profile);
 
     @Query("UPDATE Profile SET name = :name_")
     void updateName(String name_);
@@ -24,7 +26,7 @@ public interface ProfileDao {
     void updateWeight(int weight_);
 
     @Query("SELECT * FROM Profile")
-    public Profile getProfile();
+    public List<Profile> getProfile();
 
     @Query("SELECT name FROM Profile")
     public String getName();

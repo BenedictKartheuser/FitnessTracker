@@ -25,6 +25,8 @@ import com.example.fitnesstracker.dao.WorkoutDao;
 import com.example.fitnesstracker.Sport;
 import com.example.fitnesstracker.Workout;
 
+import java.util.List;
+
 public class Training extends Fragment {
 
     private Workout workout;
@@ -54,6 +56,12 @@ public class Training extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        new LoadProfileTask().execute();
+    }
+
     private void addToView(View root){
         duration = 0;
 
@@ -70,7 +78,7 @@ public class Training extends Fragment {
         setUpDurationPicker();
 
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
-        profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
+        profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
 
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,17 +136,23 @@ public class Training extends Fragment {
         });
     }
 
-    class LoadProfileTask extends AsyncTask<Void, Void, Profile>{
+    class LoadProfileTask extends AsyncTask<Void, Void, List<Profile>> {
 
         @Override
-        protected Profile doInBackground(Void... voids) {
+        protected List<Profile> doInBackground(Void... voids) {
             return profileDao.getProfile();
         }
 
         @Override
-        protected  void onPostExecute(Profile loadedProfile){
-            profile = loadedProfile;
-            super.onPostExecute(profile);
+        protected  void onPostExecute(List<Profile> loadedProfile){
+            if (loadedProfile == null) {
+                profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
+                Log.println(Log.WARN, "1", "Training: Loaded Profile = null");
+            } else {
+                Log.println(Log.WARN, "1", "Training: Could load Profile: " + loadedProfile.get(0));
+                profile = loadedProfile.get(0);
+            }
+            super.onPostExecute(loadedProfile);
 
         }
     }
