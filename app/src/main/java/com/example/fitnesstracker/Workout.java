@@ -11,7 +11,10 @@ import java.util.Date;
 @Entity
 public class Workout {
 
-    @PrimaryKey @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
+    @ColumnInfo(name = "timestamp")
     private String timestamp;
 
     @ColumnInfo(name = "sport")
@@ -52,7 +55,14 @@ public class Workout {
         this.calorieConsumption = calorieConsumption;
     }
 
-    @NonNull
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getTimestamp() {
         return timestamp;
     }

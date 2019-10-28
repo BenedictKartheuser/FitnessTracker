@@ -13,14 +13,6 @@ public class Profile {
     public static final int DEFAULT_HEIGHT= 180;
     public static final int DEFAULT_WEIGHT = 70;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     @PrimaryKey(autoGenerate = true)
     private long id;
 
@@ -37,6 +29,14 @@ public class Profile {
         setName(name);
         setHeight(height);
         setWeight(weight);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @NonNull
