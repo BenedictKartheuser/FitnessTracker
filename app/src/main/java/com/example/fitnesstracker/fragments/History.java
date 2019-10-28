@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -97,6 +98,8 @@ public class History extends Fragment {
 
         adapter = new RecyclerViewAdapter(new ArrayList<Workout>());
         recyclerView.setAdapter(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
 
         return root;
@@ -121,4 +124,6 @@ public class History extends Fragment {
             adapter.setHistory(history);
         }
     }
+
+
 }
