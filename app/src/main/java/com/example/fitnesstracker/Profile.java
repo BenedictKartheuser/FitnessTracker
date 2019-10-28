@@ -10,10 +10,21 @@ import androidx.room.PrimaryKey;
 public class Profile {
 
     public static final String DEFAULT_NAME = "User";
-    public static final int DEFAULT_SIZE = 180;
+    public static final int DEFAULT_HEIGHT= 180;
     public static final int DEFAULT_WEIGHT = 70;
 
-    @PrimaryKey @NonNull
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
+    @ColumnInfo (name = "name")
     private String name;
 
     @ColumnInfo (name = "height")

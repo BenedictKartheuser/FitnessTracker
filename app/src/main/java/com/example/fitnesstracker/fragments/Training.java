@@ -25,6 +25,8 @@ import com.example.fitnesstracker.dao.WorkoutDao;
 import com.example.fitnesstracker.Sport;
 import com.example.fitnesstracker.Workout;
 
+import java.util.List;
+
 public class Training extends Fragment {
 
     private Workout workout;
@@ -70,7 +72,7 @@ public class Training extends Fragment {
         setUpDurationPicker();
 
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
-        profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
+        profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
 
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,17 +130,17 @@ public class Training extends Fragment {
         });
     }
 
-    class LoadProfileTask extends AsyncTask<Void, Void, Profile>{
+    class LoadProfileTask extends AsyncTask<Void, Void, List<Profile>>{
 
         @Override
-        protected Profile doInBackground(Void... voids) {
+        protected List<Profile> doInBackground(Void... voids) {
             return profileDao.getProfile();
         }
 
         @Override
-        protected  void onPostExecute(Profile loadedProfile){
-            profile = loadedProfile;
-            super.onPostExecute(profile);
+        protected  void onPostExecute(List<Profile> loadedProfile){
+            profile = loadedProfile.get(0);
+            super.onPostExecute(loadedProfile);
 
         }
     }

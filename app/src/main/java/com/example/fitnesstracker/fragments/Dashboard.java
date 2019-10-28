@@ -47,7 +47,6 @@ public class Dashboard extends Fragment {
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
         setUp();
 
         // Inflate the layout for this fragment
@@ -61,19 +60,19 @@ public class Dashboard extends Fragment {
         addToView(root);
         changeOnState(root);
 
-        if (profile == null) {
-            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_SIZE, Profile.DEFAULT_WEIGHT);
+        /*if (profile == null) {
+            profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
             Log.println(Log.WARN, "1", "setUp");
             Log.println(Log.WARN, "1", profile.getName());
-        } /*else {
+        } else {
             profile = new LoadProfileTask().execute();
-        }*/
+        }
 
         //Hier werden die EditText Felder mit den Infos aus dem Profil befüllt
         name_edit.setText(profile.getName());
         height_edit.setText(String.valueOf(profile.getHeight()));
         weight_edit.setText(String.valueOf(profile.getWeight()));
-
+*/
         setEditTextListeners();
 
         //nicht new History eigentlich, sondern History aus DB laden
@@ -130,6 +129,7 @@ public class Dashboard extends Fragment {
         @Override
         protected Void doInBackground(String... strings) {
             profileDao.updateName(profileName);
+            Log.println(Log.WARN, "1", "Update Name: " + profileName);
             return null;
         }
 
@@ -170,8 +170,46 @@ public class Dashboard extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        new Dashboard.CreateProfileTask().execute();
         new Dashboard.LoadProfileTask().execute();
         new Dashboard.LoadWorkoutTask().execute();
+    }
+
+    class CreateProfileTask extends  AsyncTask<Profile, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Profile... profiles) {
+            profileDao.insertProfile(new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT));
+            Log.println(Log.WARN, "1", "could create profile");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) { super.onPostExecute(aVoid); }
+    }
+
+    class LoadProfileTask extends AsyncTask<Void, Void, List<Profile>> {
+
+        @Override
+        protected List<Profile> doInBackground(Void... voids) {
+            return profileDao.getProfile();
+        }
+
+        @Override
+        protected  void onPostExecute(List<Profile> loadedProfile){
+            if (loadedProfile == null) {
+                profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
+                Log.println(Log.WARN, "1", "Loaded Profile = null");
+            } else {
+                Log.println(Log.WARN, "1", "Could load Profile: " + loadedProfile.get(0));
+                profile = loadedProfile.get(0);
+            }
+            name_edit.setText(profile.getName());
+            height_edit.setText(String.valueOf(profile.getHeight()));
+            weight_edit.setText(String.valueOf(profile.getWeight()));
+            super.onPostExecute(loadedProfile);
+
+        }
     }
 
     class LoadWorkoutTask extends AsyncTask<Void, Void, List<Workout>>{
@@ -187,23 +225,8 @@ public class Dashboard extends Fragment {
             workouts = history;
             lastWeek = History.getLastWeekCalories(workouts);
             Log.println(Log.WARN, "1", "LastWeek Calories" + lastWeek);
-            String kcalText = lastWeek + "kcal";
+            String kcalText = lastWeek + " kcal";
             kcal_text.setText(kcalText);
-        }
-    }
-
-    class LoadProfileTask extends AsyncTask<Void, Void, Profile> {
-
-        @Override
-        protected Profile doInBackground(Void... voids) {
-            return profileDao.getProfile();
-        }
-
-        @Override
-        protected  void onPostExecute(Profile loadedProfile){
-            profile = loadedProfile;
-            super.onPostExecute(profile);
-
         }
     }
 
