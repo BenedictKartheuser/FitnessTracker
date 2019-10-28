@@ -107,6 +107,7 @@ public class Training extends Fragment {
         sportPicked = false;
         addSport.setText("");
         addDuration.setValue(1);
+        duration = 1;
     }
 
     private void setUpSportPicker() {

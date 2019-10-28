@@ -45,9 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         calories.setText(String.valueOf(history.get(position).getCalorieConsumption()));
         sport.setText(history.get(position).getSport().split(",")[0]);
-        String detail = "Duration:" + history.get(position).getDuration() + "min - Date: "
-                + history.get(position).getTimestamp() + "/n Height: " + history.get(position).getProfile().split(",")[1]
-                + "cm - Weight: " + history.get(position).getProfile().split(",")[2] + "kg";
+        String detail = "Duration:" + history.get(position).getDuration() + "min - Date: " + history.get(position).getTimestamp() + " \nHeight: " + history.get(position).getProfile().split(",")[1] + "cm - Weight: " + history.get(position).getProfile().split(",")[2] + "kg";
         time.setText(detail);
 
     }
