@@ -1,13 +1,11 @@
 package com.example.fitnesstracker.fragments;
 
-import android.content.ClipData;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fitnesstracker.R;
@@ -67,5 +65,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.history = history;
         notifyDataSetChanged();
     }
+
+    public Workout selectItem(int position){
+        Workout workout = history.get(position);
+        return workout;
+
+
+    }
+
+    public void updateList(int position){
+        history.remove(position);
+        notifyItemRemoved(position);
+    }
+
+
 
 }

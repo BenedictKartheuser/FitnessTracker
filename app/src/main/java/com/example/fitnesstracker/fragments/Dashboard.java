@@ -40,7 +40,7 @@ public class Dashboard extends Fragment {
     private List<Workout> workouts;
 
     private ProfileDao profileDao;
-    private WorkoutDao workoutDao;
+    protected static WorkoutDao workoutDao;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
