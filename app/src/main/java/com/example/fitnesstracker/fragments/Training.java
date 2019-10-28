@@ -92,7 +92,8 @@ public class Training extends Fragment {
                 workout = new Workout(sport.toString(), duration, profile.toString());
                 workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
                 new SaveWorkoutTask().execute(workout);
-                consumedCalories.setText(String.valueOf(workout.getCalorieConsumption()));
+                String caloriesConsumed = "Consumed Calories: \n" + workout.getCalorieConsumption();
+                consumedCalories.setText(caloriesConsumed);
                 resetInputFields();
             }
         });
