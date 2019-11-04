@@ -223,7 +223,6 @@ public class Dashboard extends Fragment {
             super.onPostExecute(history);
             workouts = history;
             lastWeek = History.getLastWeekCalories(workouts);
-            Log.println(Log.WARN, "1", "LastWeek Calories" + lastWeek);
             String kcalText = lastWeek + " kcal";
             kcal_text.setText(kcalText);
         }

@@ -79,49 +79,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.dashboard);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-
-
-        /*
-        //Bottomnavigation erstellen
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_dashboard, R.id.navigation_training,
-        R.id.navigation_history, R.id.navigation_howto).build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        //NavigationUI.setupWithNavController(bottomNavigationView, navController);
-        //Set Up Mehthod for loading profiile, history etc.
-        //setUp();
-
-         */
-
-
-
-
-
-
     }
-
-    /*
-    public void switchToDashboard() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.fragment_dashboard, new Dashboard()).commit();
-    }
-
-    public void switchToTraining() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.fragment_training, new Training()).commit();
-    }
-
-    public void switchToHistory() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.fragment_history, new History()).commit();
-    }
-
-    public void switchToHowTo() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.fragment_how_to, new HowTo()).commit();
-    }
-
-     */
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
