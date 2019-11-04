@@ -69,7 +69,7 @@ public class Training extends Fragment {
 
         addSport = root.findViewById(R.id.add_sport);
         addDuration = root.findViewById(R.id.add_duration);
-        addWorkout = root.findViewById(R.id.add_workout);
+
         consumedCalories = root.findViewById(R.id.consumed_calories);
     }
 
