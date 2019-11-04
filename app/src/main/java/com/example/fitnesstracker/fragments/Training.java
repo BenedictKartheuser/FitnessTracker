@@ -86,8 +86,6 @@ public class Training extends Fragment {
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.println(Log.WARN, "1", "Clicked Add Button");
-                Log.println(Log.WARN, "1", "Sport Picked: " + sportPicked);
                 if(!sportPicked) {
                     Toast.makeText(getContext(),"Make sure to choose sport and duration",Toast.LENGTH_SHORT).show();
                     return;
@@ -119,10 +117,13 @@ public class Training extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String[] sports = getResources().getStringArray(R.array.sports_and_factor_array);
-                sport = new Sport(sports[(int) l]);
-                sportPicked = true;
-                Log.println(Log.WARN, "1", "Position: " + i);
-                Log.println(Log.WARN, "1", "Was weiss ich: " + l);
+                String content = addSport.getText().toString();
+                for (String s : sports) {
+                    if (s.split(",")[0].equals(content)) {
+                        sport = new Sport(s);
+                        sportPicked = true;
+                    }
+                }
             }
         });
     }
@@ -181,9 +182,7 @@ public class Training extends Fragment {
         protected  void onPostExecute(List<Profile> loadedProfile){
             if (loadedProfile == null) {
                 profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
-                Log.println(Log.WARN, "1", "Training: Loaded Profile = null");
             } else {
-                Log.println(Log.WARN, "1", "Training: Could load Profile: " + loadedProfile.get(0));
                 profile = loadedProfile.get(0);
             }
             super.onPostExecute(loadedProfile);
