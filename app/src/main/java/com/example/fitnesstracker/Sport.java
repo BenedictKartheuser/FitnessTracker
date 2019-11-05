@@ -27,6 +27,11 @@ public class Sport {
         setFactor(Double.parseDouble(sport.split(",")[1]));
     }
 
+    public Sport (String name, Double factor) {
+        this.name = name;
+        this.factor = factor;
+    }
+
     @NonNull
     public String getName() {
         return name;
@@ -40,7 +45,7 @@ public class Sport {
         return factor;
     }
 
-    private void setFactor(double factor) {
+    public void setFactor(double factor) {
         this.factor = factor;
     }
 
