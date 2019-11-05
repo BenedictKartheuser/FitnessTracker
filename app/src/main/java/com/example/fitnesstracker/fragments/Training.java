@@ -83,6 +83,7 @@ public class Training extends Fragment {
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
         profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
 
+        addWorkout = root.findViewById(R.id.add_workout);
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
