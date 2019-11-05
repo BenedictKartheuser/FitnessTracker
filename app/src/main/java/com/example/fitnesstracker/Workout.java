@@ -8,6 +8,10 @@ import androidx.room.PrimaryKey;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Workout with timestamp, sport, duration, profile and calorieConsumption
+ * Getter and Setter for parameters
+ */
 @Entity
 public class Workout {
 
@@ -30,6 +34,13 @@ public class Workout {
     private int calorieConsumption;
     private static final int MIN_PER_HOUR = 60;
 
+    /**
+     * Constructor
+     * calorieConsumption to be calculated
+     * @param sport sport
+     * @param duration duration
+     * @param profile profile
+     */
     public Workout(String sport, int duration, String profile) {
         this.timestamp = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         this.sport = sport;
@@ -38,17 +49,14 @@ public class Workout {
         this.calorieConsumption = calculateCalorieConsumption();
     }
 
+    /**
+     * Calculates calorie consumption of a workout with workout data
+     * @return calorie consumption of workout
+     */
     private int calculateCalorieConsumption() {
         int weight = Integer.parseInt(profile.split(",")[2]);
         double factor = Double.parseDouble(sport.split(",")[1]);
         return (int) ((weight * factor * duration) / MIN_PER_HOUR);
-    }
-
-
-    public int calculateCalorieConsumption(Workout workout) {
-        int weight = Integer.parseInt(workout.getProfile().split(",")[2]);
-        double factor = Double.parseDouble(workout.getSport().split(",")[1]);
-        return (int)(weight * factor * workout.getDuration());
     }
 
     public void setCalorieConsumption(int calorieConsumption) {

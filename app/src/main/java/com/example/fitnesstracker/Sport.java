@@ -5,6 +5,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Sport with name and factor
+ * Getter and Setter for parameters
+ */
 @Entity
 public class Sport {
 
@@ -14,15 +18,13 @@ public class Sport {
     @ColumnInfo(name = "factor")
     private double factor;
 
-    //refactorn
+    /**
+     * Constructor via String
+     * @param sport Sport as String
+     */
     public Sport (String sport) {
         setName(sport.split(",")[0]);
         setFactor(Double.parseDouble(sport.split(",")[1]));
-    }
-
-    public Sport(String name, double factor) {
-        this.name = name;
-        this.factor = factor;
     }
 
     @NonNull

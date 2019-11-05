@@ -13,8 +13,14 @@ import com.example.fitnesstracker.Workout;
 
 import java.util.List;
 
+/**
+ * Adapter for handling Recycler view
+ */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    /**
+     * Holder for single item
+     */
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         public ItemViewHolder(@NonNull View itemView) {
@@ -24,6 +30,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private List<Workout> history;
 
+    /**
+     * Constructor
+     * @param history List of workouts
+     */
     public RecyclerViewAdapter (List<Workout> history) {
         this.history = history;
     }
@@ -36,6 +46,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return ivh;
     }
 
+    /**
+     * set parameters to view item
+     * @param holder holder
+     * @param position position
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
@@ -45,7 +60,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         calories.setText(String.valueOf(history.get(position).getCalorieConsumption()));
         sport.setText(history.get(position).getSport().split(",")[0]);
-        String detail = "Duration:" + history.get(position).getDuration() + "min - Date: " + history.get(position).getTimestamp() + " \nHeight: " + history.get(position).getProfile().split(",")[1] + "cm - Weight: " + history.get(position).getProfile().split(",")[2] + "kg";
+        String detail = "Duration:" + history.get(position).getDuration() + "min - Date: " + history.get(position).getTimestamp() +
+                " \nHeight: " + history.get(position).getProfile().split(",")[1] + "cm - Weight: " +
+                history.get(position).getProfile().split(",")[2] + "kg";
         time.setText(detail);
 
     }
@@ -69,10 +86,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public Workout selectItem(int position){
         Workout workout = history.get(position);
         return workout;
-
-
     }
 
+    /**
+     * update List when removing
+     * @param position position to remove
+     */
     public void updateList(int position){
         history.remove(position);
         notifyItemRemoved(position);

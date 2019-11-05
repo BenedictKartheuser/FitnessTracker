@@ -17,14 +17,23 @@ import com.example.fitnesstracker.fragments.HowTo;
 import com.example.fitnesstracker.fragments.Training;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+/**
+ * Main and only Activity
+ * App uses Fragments
+ */
 public class MainActivity extends AppCompatActivity {
 
+    // Fragments
     private Dashboard dashFrag;
     private Training trainFrag;
     private History histFrag;
-    private HowTo howtoFrag;
+    private HowTo howToFrag;
 
 
+    /**
+     * Listener for Bottom Navigation Bar to handle fragments
+     * Handling via Switch Case
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -49,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.navigation_howto:
                     //switchToHowTo();
-                    selectedFrag = howtoFrag;
+                    selectedFrag = howToFrag;
                     setTitle(R.string.nav_howto);
                     break;
                 default: selectedFrag = dashFrag;
@@ -61,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
+    /**
+     * Creates bottomNav
+     * sets up Fragments
+     * @param savedInstanceState state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         dashFrag = new Dashboard();
         trainFrag = new Training();
         histFrag = new History();
-        howtoFrag = new HowTo();
+        howToFrag = new HowTo();
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.nav_host_fragment, dashFrag)
@@ -79,10 +93,5 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.dashboard);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-    }
-
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

@@ -25,6 +25,9 @@ import com.example.fitnesstracker.dao.WorkoutDao;
 
 import java.util.List;
 
+/**
+ * Fragment Dasboard
+ */
 public class Dashboard extends Fragment {
 
     private View root;
@@ -46,13 +49,16 @@ public class Dashboard extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //to get view
         root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         setUp();
 
-        // Inflate the layout for this fragment
         return root;
     }
 
+    /**
+     * set up contents and needed daos
+     */
     private void setUp() {
         profileDao = FitnessDatabase.getDatabase(getContext()).profileDao();
         workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
@@ -62,6 +68,10 @@ public class Dashboard extends Fragment {
         setEditTextListeners();
     }
 
+    /**
+     * Set listeners to all 3 Input Text Fields
+     * onTextChanged: Verify input and call Async Database Task to save change
+     */
     private void setEditTextListeners() {
         name_edit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -123,6 +133,9 @@ public class Dashboard extends Fragment {
         });
     }
 
+    /**
+     * Async Task to save the change of name field
+     */
     class ChangeNameTask extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -138,6 +151,9 @@ public class Dashboard extends Fragment {
         }
     }
 
+    /**
+     * Async Task to save the change of weight field
+     */
     class ChangeWeightTask extends AsyncTask<Integer, Void, Void> {
 
         @Override
@@ -152,6 +168,9 @@ public class Dashboard extends Fragment {
         }
     }
 
+    /**
+     * Async Task to save the change of height field
+     */
     class ChangeHeightTask extends AsyncTask<Integer, Void, Void> {
 
         @Override
@@ -166,6 +185,9 @@ public class Dashboard extends Fragment {
         }
     }
 
+    /**
+     * Load relevant information on Resume
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -174,12 +196,14 @@ public class Dashboard extends Fragment {
         new Dashboard.LoadWorkoutTask().execute();
     }
 
+    /**
+     * Create Profile for start with standard parameters
+     */
     class CreateProfileTask extends  AsyncTask<Profile, Void, Void> {
 
         @Override
         protected Void doInBackground(Profile... profiles) {
             profileDao.insertProfile(new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT));
-            Log.println(Log.WARN, "1", "could create profile");
             return null;
         }
 
@@ -187,6 +211,9 @@ public class Dashboard extends Fragment {
         protected void onPostExecute(Void aVoid) { super.onPostExecute(aVoid); }
     }
 
+    /**
+     * Lead Profile from database
+     */
     class LoadProfileTask extends AsyncTask<Void, Void, List<Profile>> {
 
         @Override
@@ -198,9 +225,7 @@ public class Dashboard extends Fragment {
         protected  void onPostExecute(List<Profile> loadedProfile){
             if (loadedProfile == null) {
                 profile = new Profile(Profile.DEFAULT_NAME, Profile.DEFAULT_HEIGHT, Profile.DEFAULT_WEIGHT);
-                Log.println(Log.WARN, "1", "Loaded Profile = null");
             } else {
-                Log.println(Log.WARN, "1", "Could load Profile: " + loadedProfile.get(0));
                 profile = loadedProfile.get(0);
             }
             name_edit.setText(profile.getName());
@@ -211,6 +236,9 @@ public class Dashboard extends Fragment {
         }
     }
 
+    /**
+     * Lead workouts from database for last week calculation
+     */
     class LoadWorkoutTask extends AsyncTask<Void, Void, List<Workout>>{
 
         @Override
@@ -228,6 +256,10 @@ public class Dashboard extends Fragment {
         }
     }
 
+    /**
+     * add Elements to view
+     * @param root view
+     */
     private void addToView(View root){
 
         //TextView
@@ -250,12 +282,20 @@ public class Dashboard extends Fragment {
     }
 
 
+    /**
+     * For closing keyboard when clicked somewhere else
+     * @param view view
+     */
     private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
     }
 
+    /**
+     * For closing keyboard when clicked somewhere else
+     * @param view view
+     */
     private void changeOnState(View view){
         EditText weightText = view.findViewById(R.id.weight);
         EditText heightText = view.findViewById(R.id.height);

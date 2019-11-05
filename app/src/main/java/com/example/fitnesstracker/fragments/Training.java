@@ -29,6 +29,9 @@ import com.example.fitnesstracker.Workout;
 
 import java.util.List;
 
+/**
+ * Add Workout Fragment
+ */
 public class Training extends Fragment {
 
     private Workout workout;
@@ -53,17 +56,22 @@ public class Training extends Fragment {
         addToView(root);
         setUp(root);
 
-
-        // Inflate the layout for this fragment
         return root;
     }
 
+    /**
+     * Load Profile on Resume
+     */
     @Override
     public void onResume() {
         super.onResume();
         new LoadProfileTask().execute();
     }
 
+    /**
+     * Add elements to view
+     * @param root view
+     */
     private void addToView(View root){
         duration = 0;
 
@@ -73,10 +81,13 @@ public class Training extends Fragment {
         consumedCalories = root.findViewById(R.id.consumed_calories);
     }
 
+    /**
+     * set up contents and daos
+     */
     private void setUp(View root) {
 
         duration = 0;
-        setUpSportPicker();
+        setUpSportPicker();     //set up single elements and listeners
         setUpDurationPicker();
         changeOnState(root);
 
@@ -87,7 +98,7 @@ public class Training extends Fragment {
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!sportPicked) {
+                if(!sportPicked) {  //make sure input is valid
                     Toast.makeText(getContext(),"Make sure to choose sport and duration",Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -96,12 +107,15 @@ public class Training extends Fragment {
                 new SaveWorkoutTask().execute(workout);
                 String caloriesConsumed = "Consumed Calories: \n" + workout.getCalorieConsumption();
                 consumedCalories.setText(caloriesConsumed);
-                resetInputFields();
+                resetInputFields();     //reset input fields after workout added
             }
         });
 
     }
 
+    /**
+     * reset input fields and values after workout added
+     */
     private void resetInputFields() {
         sportPicked = false;
         addSport.setText("");
@@ -109,6 +123,12 @@ public class Training extends Fragment {
         duration = 1;
     }
 
+    /**
+     * Set up Sport picker
+     * sport lists in sport.xml
+     * 2 different lists
+     * set Listeners
+     */
     private void setUpSportPicker() {
         String[] sports = getResources().getStringArray(R.array.sports_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, sports);
@@ -119,16 +139,22 @@ public class Training extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String[] sports = getResources().getStringArray(R.array.sports_and_factor_array);
                 String content = addSport.getText().toString();
-                for (String s : sports) {
+
+                for (String s : sports) {       //search sport from Sports string. There are two different sport string arrays
+                                                //one without and one with factors (seperated by ",")
                     if (s.split(",")[0].equals(content)) {
-                        sport = new Sport(s);
-                        sportPicked = true;
+                        sport = new Sport(s);   //get Sport from input in AutoCompleteTextField
+                        sportPicked = true;     //needed for verification when add button pressed
                     }
                 }
             }
         });
     }
 
+    /**
+     * Set up duration picker
+     * set Listeners
+     */
     private void setUpDurationPicker() {
 
         addDuration.setMaxValue(300);
@@ -138,17 +164,25 @@ public class Training extends Fragment {
         addDuration.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                duration = i1;
+                duration = i1;      //get and save value on Change
             }
         });
     }
 
+    /**
+     * handling to close keyboard when clicked somewhere else
+     * @param view view
+     */
     private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
     }
 
+    /**
+     * handling to close keyboard when clicked somewhere else
+     * @param view view
+     */
     private void changeOnState(View view){
 
         addSport.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -156,7 +190,6 @@ public class Training extends Fragment {
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus){
                     hideKeyboard(view);
-
                 }
             }
         });
@@ -172,6 +205,9 @@ public class Training extends Fragment {
 
     }
 
+    /**
+     * Async Load profile from Database
+     */
     class LoadProfileTask extends AsyncTask<Void, Void, List<Profile>> {
 
         @Override
@@ -191,6 +227,9 @@ public class Training extends Fragment {
         }
     }
 
+    /**
+     * Async save workout to database
+     */
     class SaveWorkoutTask extends AsyncTask<Workout, Void, Void> {
 
         @Override

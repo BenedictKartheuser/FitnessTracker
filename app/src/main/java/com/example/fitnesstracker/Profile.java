@@ -6,6 +6,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * User Profile for App
+ * Only one Profile used
+ * Getter and Setter for parameter Name, Weight and Height
+ */
 @Entity
 public class Profile {
 

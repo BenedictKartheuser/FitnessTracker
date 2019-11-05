@@ -11,7 +11,10 @@ import android.widget.TextView;
 
 import com.example.fitnesstracker.R;
 
-
+/**
+ * HowTo Fragment
+ * No logic content
+ */
 public class HowTo extends Fragment {
 
     @Override

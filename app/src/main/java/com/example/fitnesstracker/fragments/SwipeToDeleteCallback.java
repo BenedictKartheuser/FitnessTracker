@@ -15,6 +15,9 @@ import com.example.fitnesstracker.fragments.RecyclerViewAdapter;
 
 import static java.security.AccessController.getContext;
 
+/**
+ * Swipe to Delete Handling
+ */
 public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
     private RecyclerViewAdapter adapter;
@@ -31,12 +34,21 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
         return false;
     }
 
+    /**
+     * Reaction when item swiped to delete
+     * Delete item and update list
+     * @param viewHolder holder
+     * @param direction direction, irrelevant
+     */
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
         final Workout workout = adapter.selectItem(position);
 
 
+        /**
+         * Async database access to remove swiped item
+         */
         class DeleteItemTask extends AsyncTask<Void, Void, Void>{
 
             @Override
@@ -45,11 +57,9 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
                 return null;
             }
         }
+
         new DeleteItemTask().execute();
         adapter.updateList(position);
-
-        //new DeleteItemTask.execute(workout);
-
     }
 
 

@@ -13,6 +13,10 @@ import com.example.fitnesstracker.Workout;
 import com.example.fitnesstracker.dao.ProfileDao;
 import com.example.fitnesstracker.dao.WorkoutDao;
 
+/**
+ * Database for App
+ * Profile and Workouts needed
+ */
 @Database(entities = {Profile.class, Sport.class, Workout.class}, version = 2, exportSchema = false)
 public abstract class FitnessDatabase extends RoomDatabase {
 

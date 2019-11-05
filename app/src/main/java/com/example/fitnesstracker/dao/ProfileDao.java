@@ -10,6 +10,10 @@ import com.example.fitnesstracker.Profile;
 
 import java.util.List;
 
+/**
+ * Profile Dao to handle Profile in Database
+ * Needed for Dashboard, personalisation and calculations
+ */
 @Dao
 public interface ProfileDao {
 

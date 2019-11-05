@@ -30,32 +30,30 @@ public class History extends Fragment {
     private WorkoutDao workoutDao;
 
     /**
-     * Berechnet verbrauchte Kalorien der letzten Woche
-     * Liest Datum aus Workouts und vergleicht mit Datum von vor einer Woche
-     * summiert Kalorien relevanter Workouts auf
-     * @param history - Liste aller workouts, wird vorher aus DB geladen
-     * @return verbrauchte Kalorien der letzten Woche via getCalories Methode
+     * Calculates last weeks calorie consumption
+     * Uses date from workout to find relevant workouts
+     * sums up relevant workouts
+     * @param history all workouts as a listed fetched from database
+     * @return calorie consumption from last week
      */
 
     public static int getLastWeekCalories(List<Workout> history) {
-        Log.println(Log.WARN, "1", "Size: " + history.size());
-        int[] calories = new int[history.size()];
+        int[] calories = new int[history.size()];                       //Array for calories only
         Date workoutDate;
         Date lastWeek = getDateFromLastWeek();
         for (int i = 0; i < history.size(); i++) {
             workoutDate = getDateFromWorkout(history.get(i));
-            if (workoutDate.compareTo(lastWeek) > 0) {
-                calories[i] = history.get(i).getCalorieConsumption();
-                Log.println(Log.WARN, "1", "Workout " + (i+1) + ": " + history.get(i));
+            if (workoutDate.compareTo(lastWeek) > 0) {                  //if workout was within last week:
+                calories[i] = history.get(i).getCalorieConsumption();   //add to Array
             }
         }
-        return getCalories(calories);
+        return getCalories(calories);                                   //Method to sum up
     }
 
     /**
-     *
-     * @param calories Array mit allen verbrauchten Kalorien der letzten Woche
-     * @return Gesamtverbrauch
+     * Sums up calories from array
+     * @param calories array with calories from last week
+     * @return calorie consumption from last week
      */
     private static int getCalories(int[] calories) {
         int lastWeekCalories = 0;
@@ -67,23 +65,23 @@ public class History extends Fragment {
     }
 
     /**
-     * Ermittelt Datum aus einem Workout
-     * @param workout - einzelnes Workout
-     * @return Datum des workouts
+     * Gets date of workout
+     * @param workout single workout
+     * @return Date of workout
      */
     private static Date getDateFromWorkout(Workout workout) {
         Date date = new Date();
         try {
             date =  new SimpleDateFormat("dd-MM-yyyy").parse(workout.toString());
         } catch (Exception e) {
-            //TODO
+            Log.println(Log.WARN,"PARS", "Parsing error");
         }
         return date;
     }
 
     /**
-     *
-     * @return Datumsobjekt der letzten Woche
+     * calculates last weeks date
+     * @return last weeks Date
      */
     private static Date getDateFromLastWeek() {
         return new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
@@ -96,6 +94,15 @@ public class History extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_history, container, false);
 
+        setUp(root);    //set up contents and helpers
+        return root;
+    }
+
+    /**
+     * Set up view and contents
+     * @param root view
+     */
+    private void setUp(View root) {
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -104,16 +111,20 @@ public class History extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(adapter));
         itemTouchHelper.attachToRecyclerView(recyclerView);
         workoutDao = FitnessDatabase.getDatabase(getContext()).workoutDao();
-
-        return root;
     }
 
+    /**
+     * async load workouts to histoy on resume
+     */
     @Override
     public void onResume() {
         super.onResume();
         new LoadWorkoutTask().execute();
     }
 
+    /**
+     *  Load workouts from database
+     */
     class LoadWorkoutTask extends AsyncTask<Void, Void, List<Workout>>{
 
         @Override
